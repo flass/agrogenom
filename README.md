@@ -7,5 +7,5 @@ Python modules and scripts for the construction of Agrogenom database, a phyloge
 ['blockevents.py'](https://github.com/flass/agrogenom/blockevents.py) (library) and ['getblockevents.py'](https://github.com/flass/agrogenom/getblockevents.py) (execution script) are used to build block evolutionary events given a collection of reconciled gene trees and a phylogenomic database documenting gene neighbourhoods.
 [depend on tree2 Python package https://github.com/flass/tree2]
 
-['score_genegroup_funsim.py'](https://github.com/flass/agrogenom/score_genegroup_funsim.py) is used to compute Functional Similarity metric (derived from Gene Ontology annoatation graph) within groups of genes given a list of gene GO annoatations.
+['score_genegroup_funsim.py'](https://github.com/flass/agrogenom/score_genegroup_funsim.py) is used to compute Functional Homogeneity metric (derived from Gene Ontology annoatation graph) within groups of genes given a list of gene GO annoatations.
 [depend on AIGO Python package https://pypi.python.org/pypi/AIGO/0.1.0]
