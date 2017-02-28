@@ -13,8 +13,6 @@ def setToStr(s):
 	l.sort()
 	return "|".join(l)
 
-#~ dirgenetrees = sys.argv[1]
-#~ dirsubfamostortpickles = sys.argv[2]
 nfreftree = sys.argv[1]
 topoccurclade = sys.argv[2]
 dirout = sys.argv[3]
