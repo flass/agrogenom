@@ -17,23 +17,13 @@ def eventangles(devent, genomesize):
 	devtangle['gainreplace'] = devtangle['gain'] + devtangle['replacement']
 	return devtangle
 
-#~ nfin = sys.argv[1]
-#~ nfin = '/home/lassalle/agrogenom/ancestral_content_230413/Count.AsymmetricWagner.gain_15/synthesis/translocations/genome_synthesis.replicon_location.pickle'
-#~ nfin = '/home/lassalle/agrogenom/synthesis_270813/genome_synthesis.pickle'
-nfin = '/home/lassalle/agrogenom/synthesis_270813/block_aware/genome_synthesis.pickle'
-#~ nftabin = '/home/lassalle/agrogenom/synthesis_270813/genome_synthesis.tab'
-#~ ftabin = open(nftabin, 'r')
-#~ head = ftabin.readline().rstrip('\n').split('\t')
-#~ dfieldsi = dict(zip(head, range(len(head))))
-#~ dnodefields = {}
-#~ for line in ftabin:
-	#~ lsp = line.rstrip('\n').split('\t')
-	#~ dnodefields[lsp[0]] = lsp
-#~ ftabin.close()
-magnif = 1.5
-#~ magnif = sys.argv[2]
-topanccode = 'N15'
-#~ topanccode = sys.argv[3]
+nfin = sys.argv[1]
+# example: nfin = '/home/lassalle/agrogenom/synthesis_270813/block_aware/genome_synthesis.pickle'
+# this file is the main output from 'ancestral_content.py' script
+magnif = sys.argv[2]
+# example: magnif = 1.5
+topanccode = sys.argv[3]
+# example: topanccode = 'N15'
 
 reftree = tree2.load_pickle(nfin)
 
@@ -117,5 +107,5 @@ for node in reftree:
 doc.save('genome_contents+events.svg')
 #~ print doc.getXML()
 fout = open('reftree.svg', 'w')
-fout.write(topanc.svgTree(dnodecoord=dnodecoord, comment='gainlosscount', textorbit=50, defaultstyle='stroke:black; fill:none; stroke-width:4; '))
+fout.write(topanc.writeSvgTree(dnodecoord=dnodecoord, comment='gainlosscount', textorbit=50, defaultstyle='stroke:black; fill:none; stroke-width:4; '))
 fout.close()

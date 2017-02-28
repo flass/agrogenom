@@ -17,13 +17,13 @@ def eventradius(devent, repliconsize, magnif=1.0):
 		devtradius[evt] = magnif * scipy.sqrt(2.0 * float(devent[evt])/scipy.pi)
 	return devtradius
 
-#~ nfin = sys.argv[1]
-nfin = '/home/lassalle/agrogenom/synthesis_270813/translocations/genome_synthesis.replicon_location.pickle'
-#~ nfin = '/home/lassalle/agrogenom/synthesis_270813/genome_synthesis.pickle'
-magnif = 1.2
-#~ magnif = sys.argv[2]
-topanccode = 'N15'
-#~ topanccode = sys.argv[3]
+nfin = sys.argv[1]
+# example: nfin = '/home/lassalle/agrogenom/synthesis_270813/translocations/genome_synthesis.replicon_location.pickle'
+# this file is the main output from 'chromosomal_translocations.py' script
+# example: magnif = 1.2
+magnif = sys.argv[2]
+# example: topanccode = 'N15'
+topanccode = sys.argv[3]
 
 reftree = tree2.load_pickle(nfin)
 
@@ -114,5 +114,5 @@ for node in reftree:
 doc.save('replicon_contents+events.svg')
 #~ print doc.getXML()
 fout = open('reftree.svg', 'w')
-fout.write(topanc.svgTree(dnodecoord=dnodecoord, labels=True, textorbit=50, defaultstyle='stroke:black; fill:none; stroke-width:5; '))
+fout.write(topanc.writeSvgTree(dnodecoord=dnodecoord, labels=True, textorbit=50, defaultstyle='stroke:black; fill:none; stroke-width:5; '))
 fout.close()
