@@ -238,7 +238,7 @@ The events that are found in the largest blocks of genes are retained as optimal
 
 This choice of optimal events may create the cohabitation in the same gene tree of events inferred in different replicates, which does not guaratee the consistency of the global scenario.  
 This potential conflict is resolved during an a posteriori top-down parcours of the gene tree to integrate and completion of the reconciliation.  
-Remaining unexplained topological conflict between the gene tree and the species tree is resolved by infering additional HGT based on minimization of subtrees taxonomic depth (using toxonomic incongruence scoring algorithm [Bigot et al. 2013]).
+Remaining unexplained topological conflict between the gene tree and the species tree is resolved by infering additional HGT based on minimization of subtrees taxonomic depth (using toxonomic incongruence scoring algorithm from [Bigot et al. 2013] reimplemented in [tree2 module][tree2]).
 
 ```bash
 mkdir refined_trees
@@ -260,7 +260,6 @@ At this point, it is assumed that we identified all events that lead to the crea
 Gene families are thus separated into orthologous subfamilies in order to reconstruct the presence/absence state of each ortholog in ancestral genomes.
 For this, we use the Wagner parsimony algorithm implemented in [COUNT] program ([Csuros 2008]), which is called by [ancestral_content.py] script.
 Doing so, a final round of reconciliation is made, inferring HGT events to explain heterogeneous representation of species within othologuous gene subfamilies.
-ing unexplained topological conflict between the gene tree and the species tree is resolved by infering additional HGT based on minimization of subtrees taxonomic depth (using toxonomic incongruence scoring algorithm [Bigot et al. 2013]).
 
 ```bash
 mkdir -p ./ancestral_content/tmp
@@ -268,7 +267,7 @@ scripts_agrogenom/lsfullpath.py ./nuc_alns > ./nucfam_fasta_list
 python scripts_agrogenom/ancestral_content.py -d yourdbname --infer='Count.AsymmetricWagner' -o '-gain 1.5' --tmp-dir=./ancestral_content/tmp --output-subfamily-trees=true --output-pickled-family-histories=true --output-genome-synthesis=true ./nucfam_fasta_list ./refined_trees/reconciled_tree_pickles ./reftree ./ancestral_content
 ```
 
-The script [ancestral_content.py] generates new trees (with additional transfers), which need to be gatherred with previously calculated trees into a single collection (used notably for generating the web interface, cf. [Agrogenom]).
+The script [ancestral_content.py] generates new trees (with additional transfers), which need to be gatherred with previously calculated trees into a single collection (used notably for generating the [Agrogenom] web interface).
 
 ```bash
 # merge phyloXML file collections
@@ -323,7 +322,7 @@ python scripts_agrogenom/getblockevents.py ./reconciliation_collection/reconcile
 # import into db
 psql -h yourservername -U yourusername -d yourdbname < ./blockevents/getblockevent_out.a.100/blocks_db_dump/allblocktables_sqldump.sql
 ```
-You can now generate synthesis files, including annotated Newick tree files, for rapid vizualization in a tree viewer like [seaview](http://doua.prabi.fr/software/seaview) (available as a package in most Debian distributions) of a particular gene family history or of the genome-wide synthesis of geneome gene content evolution.
+You can now generate synthesis files, including annotated Newick tree files, for rapid vizualization in a tree viewer like [seaview](http://doua.prabi.fr/software/seaview) (available as a package in most Debian distributions) of a particular gene family history, or of the genome-wide synthesis of geneome gene content evolution.
 Output also includes tables for presence/absenceprofiles of all gene families (and most interestingly, ortholous subfamilies) at all species tree's node, ancestors and extant. There are also files listing clade-specific genes - orthologous subfamilies specifically gained by an ancestor and conserved by all its descendants.
 
 ```bash
