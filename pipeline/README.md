@@ -1,18 +1,23 @@
 ## Introduction
 
 Here is described the programatic details of the procedure for generating and analysing the Agrogenom phylogenomic database, as described in [Lassalle et al. 2016].  
+
 This software pipeline is semi-automatized, i.e. there are scripts and routines that have been developped and made (fairly) flexible for generic usage, but it cannot be deployed in one click or command, because of the many idiosyncracies of everyone's project.  
+
 Typically, the way input data - from genome sequence and annotation up to homologous gene family trees - is generated may depend on contingent factors such as the technology that generated the sequences, the version of annotation formats, etc., but also on someone's taste (e.g. ML vs. bayesian phylogenetic trees).  
+
 Also, the way parallel calculation is implemented is very specific to anyone's computational environment - e.g. if using a computer cluster, what kind of job scheduler system is used? - and should be adapted accordingly. This should be fairly straightforward, given the parallelization relies on the fondamentally parallel structure of the data, typically the many gene families are considered independent for several long computational steps like sequence alignement, gene tree inference and gene tree/species tree reconciliation - in fact only the last step of block event reconstruction consider the gene families jointly.  
-Finally, one should consider the following code as a loose manual to perform inferences and analyses as described in [Lassalle et al. 2016]; to replicate the work from this study, please refer to the more detailed script [pipeline_agrogenom.csh] (which is also  more a blueprint for manual execution of the pipeline with steps to adapt than an all-in-one executable).  
+
+Thus, one should consider the following code as a loose manual to perform inferences and analyses as described in [Lassalle et al. 2016]; to replicate the work from this study, please refer to the more detailed script [pipeline_agrogenom.csh] (which is also  more a blueprint for manual execution of the pipeline with steps to adapt than an all-in-one executable).  
 
 The pipeline is divided in three parts:
   
 1. Homologous gene tree database  
-*this describes the generation of the sequence alignement and phylogenetic tree database*
-2. Species tree/gene tree reconciliations
-3. Ananalysis of genome histories
-
+*the generation of the genome database and sequence alignements and phylogenetic trees for each gene family*
+2. Species tree/gene tree reconciliations  
+*the modification and annotation of gene trees to obtain scenarios of gene family evolution over the species tree, involving gene duplication, transfer and loss (co-)events*
+3. Analysis of genome histories  
+*the definition of gene sets of interest, namely clade-specific gene sets, and their study based on their functional annotation*
 
 
 ## I. Homologous gene tree database
@@ -107,7 +112,7 @@ for famaln in `cat unicopy_nuc_aln_list` ; do
 fam=${famaln%%.*}
 famgt=phyml_trees/$fam.nwk
 echo $famgt >> unicopy_gene_tree_list
-PrunierFWD_linux64 input.tree.file=reftree.prunier aln.file=$famaln genetree.file=$famgt sequence.type=dna fwd.depth=2 aln.type=FASTA boot.thresh.conflict=$bsc max.bp=.90 multi_root.bool=false > unicopy_prunier_out/$fam.prout
+PrunierFWD_linux64 input.tree.file=reftree.prunier aln.file=$famaln genetree.file=$famgt sequence.type=dna fwd.depth=2 aln.type=FASTA boot.thresh.conflict=.90 max.bp=1.00 multi_root.bool=false > unicopy_prunier_out/$fam.prout
 done
 ```
 Note `multi.root.bool=false` refers to trying the reconciliation with an unique rooting of the *species tree*, which is assumed to be known; Prunier always tries all the roots of the unicopy gene tree, and returns the reconciliation given the most parsmonious rooting, hence our use of this reconciliation program here for rooting purposes.
@@ -142,6 +147,90 @@ The pruning is guided by the annotation of duplication nodes, and tries to sampl
 
 ### 3. Detect HGT based on statistically suported topological conflict
 
+The program [Prunier] is run on these unicopy subtree, to detect transfer events based on statistically suported topological conflict with the reference species tree.
+Prunier outputs a list of gene tree pruning steps (analogous to the SPR moves in topology search, without regrafting) that generates a forest of subtrees that are in statistical agreement with the reference species tree [Abby et al. 2010], i.e. that there is no topological conflict that remains in the gene tree that involves node with support higher than a threshold (here 0.9, on a scale of 0 to 1.0).
+
+```bash
+# generate unicopy sub-family alignments from previous family alignments
+mkdir duplications/subalns_fasta
+python scriptss_agrogenom/extract_subaln.py duplications/subtree2leaves nuc_alns_fasta fasta duplications/subalns_fasta
+
+# perform horizontal transfer detection by Prunier on unicopy subtrees (06/07/12)
+mkdir -p prunier_out/
+# [TO ADAPT FOR COMPUTATION IN PARALLEL]
+for subfamaln in `ls duplications/subalns_fasta/*` ; do
+subfam=${subfamaln%.*}
+subfamgt=duplications/subtrees/$subfam.nwk
+PrunierFWD_linux64 input.tree.file=reftree.prunier aln.file=$subfamaln genetree.file=$subfamgt sequence.type=dna fwd.depth=2 aln.type=FASTA boot.thresh.conflict=.90 max.bp=1.00 multi_root.bool=false > prunier_out/$subfam.prout
+done
+```
+
+### 4. Integration of reconciliation scenarios
+
+Prunier outputs a forest of pruned subtree, which needs to be interpreted in terms of HGT events matched to a gene tree node, and with donor and recipient located in the species tree. 
+This translation of Prunier output is done for every unicopy subtree; those many independent reconciliations are then integrated using [rec_to_db.py] script, by creating unique records of events and merging those that are redundant, thus preparing the integration of reconciliations into a global scenario for the whole gene family. 
+
+```bash
+# this step requires setting up a SQL database following the agrgenom schema
+psql -h yourservername -U yourusername -d yourdbname < scripts_agrogenom/agrogenomdb_schema.sql
+# it is possible for parallel jobs to run the script: a stack of tasks will be distributed to parallel workers via dynamic query of the database.
+# generate task list and corresponding db table
+scripts_agrogenom/lsfullpath.py duplications/modified_trees > duplications/modified_tree_list
+psql -h yourservername -U yourusername -d yourdbname << EOF
+CREATE TABLE IF NOT EXISTS reconciliation_to_db (gene_tree_file_path varchar(500) PRIMARY KEY, current_status int DEFAULT 0, date timestamp with time zone DEFAULT now(), job_id DEFAULT 0);
+\copy reconciliation_to_db (gene_tree_file_path) from duplications/modified_tree_list
+UPDATE reconciliation_to_db SET current_status=0, date=now(), job_id=0;
+EOF
+# [TO ADAPT FOR COMPUTATION IN PARALLEL]
+mkdir integrate_rec
+for i in `seq 1 20` ; do
+# every job will query a task table in the SQL db to fetch a new task; concurrent access of jobs to task table is avoided with explicit table lock
+python rec_to_db.py --task.survey.table=public.reconciliation_to_db --dir.subtrees=duplications/subtrees --dir.subtree2leaf.dict=duplications/subtree2leaves --dir.prunier.out=prunier_out --reference.tree=reftree --jobid=$i --dir.output=integrate_rec -b 0.9 &
+done
+```
+
+These information will be then uploaded to a relational (SQL) database that gathers data relating to genome annotation, gene content and order and gene family scenarios of evolution (see [database/](https://github.com/flass/agrogenom/tree/master/database) section and [pipeline_agrogenom.csh] for setting up the SQL db). 
+It is important to note that at this point the plurality of solutions that may have been found in independent replicates is preserved.
+
+```bash
+# import of data (with interactive validation of commits)
+# copy dumps created by multiple jobs
+python scripts_agrogenom/import_sql_dumps.py -c -i -d --job.dumps.dir=integrate_rec
+```
+
+### 5. Build genomic blocks of evolutionary events
+
+
+This script [getblockevents.py] finds block events and create the corresponding objects in the database.
+It first explore the contemporary genomes (replicon by replicon), recognizing events on their lineage that are similar between neighbouring genes and aggregate them into "leaf block events";
+
+```bash
+# similarly to above, parallel jobs can be working on independent tasks, distributed from a task table in the SQL db
+psql -h yourservername -U yourusername -d yourdbname << EOF
+CREATE TABLE public.buildingblocks AS (SELECT chromosome, count(*) as nb_genes, 0 as job_id, 0 as current_status, now() as date FROM genome.gene GROUP BY chromosome);
+EOF
+
+# leaf blocks reconstruction
+for i in `seq 1 20` ; do
+# every job will query a task table in the SQL db to fetch a new task; concurrent access of jobs to task table is avoided with explicit table lock
+scripts_agrogenom/getblockevents.py integrate_rec/reconciled_tree_pickless reftree blockevents $i -d yourdbname -c public.buildingblocks l
+done
+```
+
+In a second step, leaf block events from different genomes referring to the same evolutionary (duplication, transfer) events are aggregated into an "ancestral block event".
+
+```bash
+# this is done in one sequential job
+i=21
+scripts_agrogenom/getblockevents.py integrate_rec/reconciled_tree_pickless reftree blockevents $i -d yourdbname -c public.buildingblocks a
+```
+
+Ancestral blocks are thus the units of actual evotutionary events that gather homologous single gene events set in the past (i.e. located at internal gene tree nodes) - or rather, gathering independent observations in different gene families of the same evolutionary event.
+Leaf blocks are the descendent of the ancestral blocks, i.e. their realization in contemporary genomes.
+
+
+## III. Analysis of genome histories  
+
 
 ### References:
 [Lassalle F et al. (2016)][Lassalle et al. 2016] "Ancestral genome reconstruction reveals the history of ecological diversification in Agrobacterium.", bioRxiv, p. 034843. doi: 10.1101/034843.  
@@ -160,6 +249,7 @@ The pruning is guided by the annotation of duplication nodes, and tries to sampl
 [pipeline_agrogenom.csh]: https://github.com/flass/agrogenom/blob/master/pipeline/pipeline_agrogenom.csh
 [rec_to_db.py]: https://github.com/flass/agrogenom/blob/master/scripts/rec_to_db.py
 [find_ancestral_duplications.py]: https://github.com/flass/agrogenom/blob/master/scripts/find_ancestral_duplications.py
+[getblockevents.py]: https://github.com/flass/agrogenom/blob/master/scripts/getblockevents.py
 
 [fig0]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-0.png
 [fig1]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-1.png

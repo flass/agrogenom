@@ -342,6 +342,36 @@ setenv reftree $agrodata/reftree/jk_trees.mreconsensus.len.bs
 
 # this part of the procedure is specific to the making of Agrogenom database
 
+
+########################################################
+# II.0 # Initiate storage of information in SQL database
+########################################################
+
+
+## Use of a PostGreSQL database ; schema inspired from Phylariane scheme, adding block information and differentiating DTLSU events in separate tables
+# [TO ADAPT] change server and database/user names
+# create database (server side) ; require system admin rights and log in as 'postgres' usercluster
+ssh pbil-sgbd
+psql -h localhost -U postgres -c 'CREATE DATABASE agrogenom ; CREATE USER lassalle' # additionally, need to alloacte the appropriate admin rights to the user
+logout
+# loads the 'ltree' module
+psql -h localhost -U postgres -d $yourdbname -f /usr/share/postgresql/8.3/contrib/ltree.sql
+# builds the database from modified Phylariane scheme
+cd $agrodata
+psql -h $yourservername -U $yourusername -d $yourdbname -f database/agrogenom_schema.sql
+bunzip2 database/agrogenom_gene_table.csv.bz2
+psql -h $yourservername -U $yourusername -d $yourdbname
+\copy genome.gene from '/pandata/lassalle/agrogenom/database/agrogenom_gene_table.csv' with delimiter as '|'
+UPDATE genome.gene SET tax_id = s.tax_id FROM (SELECT tax_id, number FROM phylogeny.species_node ) as s WHERE split_part(gene.chromosome, '_', 1)=s.number ;
+
+# loads the `species_tree` and `species_node` table from reference tree
+python $scripts/make_reftree.py $agrodata/reftree/jk_trees.mreconsensus.len.bs $agrodata/code5/dic_spe_code $agrodata/code5/dic_taxid_code $agrodata/reftree/$subdbname
+psql -h $yourservername -U $yourusername -d $yourdbname -f $agrodata/reftree/$subdbname.species_tree_node_tables.sql
+
+## map back transfer events on full annotated gene trees and refine duplication annotations on a forest of subtrees from gene trees pruned at transfer nodes
+scripts/lsfullpath.py $currentrec/prunier_out > $currentrec/prunier_out_list
+# 38165 reconciled unicopy subtrees
+
 #############################
 # II.1 # (re-)root gene trees
 #############################
@@ -442,38 +472,8 @@ mkdir logs/prunier
 $scripts/lsfullpath.py $currentrec/subalns_fasta > $currentrec/subalns_fasta_list
 $scripts/prunier.qsub $currentrec/subalns_fasta_list $agrodata/reftree/$subdbname.reftree.prunier $currentrec/prunier_out $agrodata/logs/prunier q1day 1 400 dna 0.9 $currentrec/subtrees
 
-
-########################################################
-# II.4 # Initiate storage of information in SQL database
-########################################################
-
-
-## Use of a PostGreSQL database ; schema inspired from Phylariane scheme, adding block information and differentiating DTLSU events in separate tables
-# [TO ADAPT] change server and database/user names
-# create database (server side) ; require system admin rights and log in as 'postgres' usercluster
-ssh pbil-sgbd
-psql -h localhost -U postgres -c 'CREATE DATABASE agrogenom ; CREATE USER lassalle' # additionally, need to alloacte the appropriate admin rights to the user
-logout
-# loads the 'ltree' module
-psql -h localhost -U postgres -d $yourdbname -f /usr/share/postgresql/8.3/contrib/ltree.sql
-# builds the database from modified Phylariane scheme
-cd $agrodata
-psql -h $yourservername -U $yourusername -d $yourdbname -f database/agrogenom_schema.sql
-bunzip2 database/agrogenom_gene_table.csv.bz2
-psql -h $yourservername -U $yourusername -d $yourdbname
-\copy genome.gene from '/pandata/lassalle/agrogenom/database/agrogenom_gene_table.csv' with delimiter as '|'
-UPDATE genome.gene SET tax_id = s.tax_id FROM (SELECT tax_id, number FROM phylogeny.species_node ) as s WHERE split_part(gene.chromosome, '_', 1)=s.number ;
-
-# loads the `species_tree` and `species_node` table from reference tree
-python $scripts/make_reftree.py $agrodata/reftree/jk_trees.mreconsensus.len.bs $agrodata/code5/dic_spe_code $agrodata/code5/dic_taxid_code $agrodata/reftree/$subdbname
-psql -h $yourservername -U $yourusername -d $yourdbname -f $agrodata/reftree/$subdbname.species_tree_node_tables.sql
-
-## map back transfer events on full annotated gene trees and refine duplication annotations on a forest of subtrees from gene trees pruned at transfer nodes
-scripts/lsfullpath.py $currentrec/prunier_out > $currentrec/prunier_out_list
-# 38165 reconciled unicopy subtrees
-
 ###########################################################################
-# II.5 # Completion and integration + db upload of reconciliation scenarios
+# II.4 # Completion and integration + db upload of reconciliation scenarios
 ###########################################################################
 
 # within the same script rec_to_db.py, several key steps:
@@ -528,7 +528,7 @@ pg_dump -U $yourusername -h $yourservername -f $agrodata/database/agrogenom_0701
 
 
 ####################################################
-# II.6 # Build genomic blocks of evolutionary events
+# II.5 # Build genomic blocks of evolutionary events
 ####################################################
 
 # This script getblockevents.py finds block events and create the corresponding objects in the database.
@@ -558,13 +558,12 @@ cd $blocks/getblockevent_out.a.81/
 foreach file (`ls blocks_db_dump/*`)
 sed -e "s/'//g" $file > $file.2
 end
-psql -h $yourservername -U $yourusername -d $yourdbname
 # make a backup the database schema and data at this step
 pg_dump -U $yourusername -h $yourservername -f $agrodata/database/agrogenom_dump_210213.tar -F t agrogenom
 
 
 ##################################
-# II.7 # Reconciliation refinement
+# II.6 # Reconciliation refinement
 ##################################
 
 # When multiple transfer events were proposed by independent Prunier inferences on overlapping unicopy subtrees ( = replicates)
@@ -593,7 +592,7 @@ pg_dump -U $yourusername -h $yourservername -f $agrodata/database/agrogenom_dump
 
 
 #########################################
-# II.8 # Ancestral content reconstruction
+# II.7 # Ancestral content reconstruction
 #########################################
 
 # separation of families into orthologous subfamilies and reconstruction of ancestral states with Wagner pasimony (call to COUNT program (Csuros 2008))
