@@ -442,26 +442,6 @@ mkdir logs/prunier
 $scripts/lsfullpath.py $currentrec/subalns_fasta > $currentrec/subalns_fasta_list
 $scripts/prunier.qsub $currentrec/subalns_fasta_list $agrodata/reftree/$subdbname.reftree.prunier $currentrec/prunier_out $agrodata/logs/prunier q1day 1 400 dna 0.9 $currentrec/subtrees
 
-###############################################################################################
-# II.3 # detect additional HGT based on DTL parsimony (explain unsuported topological conflict)
-###############################################################################################
-
-## reconciliations of transfers using TPMS
-cd $currentrec
-mkdir tpms_transfers
-$TPMS/tpms_mkdb -families-trees=$currentrec/modified_trees -seq-to-species=$agrodata/tpms_db/seqNames2species -sp-tree=$agrodata/reftree/$subdbname.reftree.tpms -output=$currentrec/modified_trees.tpms_db -threads=24
-$TPMS/tpms_computations -collection=$currentrec/modified_trees.tpms_db -output-dir=$currentrec/tpms_transfers/ -threads=24
-mv $currentrec/tpms_transfers/detectedTransfers.txt $currentrec/tpms_transfers/detectedTransfers_bs1.txt
-
-# branch supports as considered by TPMS must be in the range [0, 100]
-mkdir $currentrec/modified_trees_bs100
-python $scripts/changesupportrange.py $currentrec/modified_trees $currentrec/modified_trees_bs100 1.0 100
-# make a tree db
-$TPMS/tpms_mkdb -families-trees=$currentrec/modified_trees_bs100 -seq-to-species=$agrodata/tpms_db/seqNames2species -sp-tree=$agrodata/reftree/$subdbname.reftree.tpms -output=$currentrec/modified_trees_bs100.tpms_db -threads=24
-# search for transfers
-$TPMS/tpms_computations -collection=$currentrec/modified_trees_bs100.tpms_db -output-dir=$currentrec/tpms_transfers/ -threads=24
-mv $currentrec/tpms_transfers/detectedTransfers.txt $currentrec/tpms_transfers/detectedTransfers_bs100.txt
-
 
 ########################################################
 # II.4 # Initiate storage of information in SQL database
@@ -499,9 +479,11 @@ scripts/lsfullpath.py $currentrec/prunier_out > $currentrec/prunier_out_list
 # within the same script rec_to_db.py, several key steps:
 # - Prunier reconciliation of many subtrees from a same gene family tree are interpreted (inference of HGT donor and recipients)
 #   and integrated into one single gene tree reconciliation;
-# - these reconciliations are completed (i.e. remaining unexplained topological conflict between the gene tree and the species tree)
-#   by infering additional HGT based on minimization of subtrees taxonomic depth (using XD algorithm from TPMS (Bigot et al. 2013)
-#   re-implemented in this script);
+# - for the need of the db upload procedure (see below), reconciliation scenarios need to be complete, i.e. that every node of the gene tree has an avent associated to it.
+#	For this reason, these reconciliations are completed (i.e. remaining unexplained topological conflict between the gene tree and the species tree)
+#   by infering additional HGT based on minimization of subtrees taxonomic depth (using XD algorithm from TPMS (Bigot et al. 2013) as re-implemented in this script).
+#   Note however that this inference will be re-made at step II.7, based on the final set of inferred HGT events. This step of the procedure thus leads to infering
+#	events that have no final value, and for this reason, it is not described in the pipeline summary
 # - load detailed (e.g. source of HGT inference, mapping of unicopy subtrees) and global (list of all events per node) reconciliation 
 #   information in SQL database.
 
@@ -590,7 +572,9 @@ pg_dump -U $yourusername -h $yourservername -f $agrodata/database/agrogenom_dump
 # i.e. favouring the evnts that are found in the largest blocks of genes. When this criterion is not discriminating
 # (most events involve single gens), the frequency of equivalent transfer events among the independent replicates.
 # The choice of the optimal event may create the cohabitation of events from different replicates, which does not guaratee
-# the consistency of the scenario; the potential conflict is resolved by a posteriori integration and completion of the reconciliation
+# the consistency of the scenario; the potential conflict is resolved by a posteriori integration and completion of the reconciliation:
+# remaining unexplained topological conflict between the gene tree and the species tree is resolved by infering additional HGT
+# based on minimization of subtrees taxonomic depth (using XD algorithm from TPMS (Bigot et al. 2013) as re-implemented in this script)
 # (call to same functions as in step II.5).
 
 qsub -q q1day -N refine_transfer -e $agrodata/logs/refine_transfer.stderr -o $agrodata/logs/refine_transfer.stdout << EOF
