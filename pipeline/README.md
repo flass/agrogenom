@@ -110,20 +110,27 @@ echo $famgt >> unicopy_gene_tree_list
 PrunierFWD_linux64 input.tree.file=reftree.prunier aln.file=$famaln genetree.file=$famgt sequence.type=dna fwd.depth=2 aln.type=FASTA boot.thresh.conflict=$bsc max.bp=.90 multi_root.bool=false > unicopy_prunier_out/$fam.prout
 done
 ```
-Note `multi.root.bool=false` refers to trying the reconciliation with an unique rooting of the *species tree*, which is assumed to be known; Prunier always tries all the roots of the unicopy gene tree, and returns the reconciliation given the most parsmonious rooting, hence or use of this reconciliation program here.
+Note `multi.root.bool=false` refers to trying the reconciliation with an unique rooting of the *species tree*, which is assumed to be known; Prunier always tries all the roots of the unicopy gene tree, and returns the reconciliation given the most parsmonious rooting, hence our use of this reconciliation program here for rooting purposes.
 
-```
+```bash
 # rooting of trees as by Prunier
 mkdir unicopy_rooted_trees
 python scripts_agrogenom/root_as_prunier.py unicopy_gene_tree_list reftree unicopy_prunier_out unicopy_rooted_trees
 # replace TMPS-rooted unicopy gene tres by the Prunier-rooted ones
-cp -f $agrodata/unicopy_rooted_trees/* $agrodata/rooted_trees
+cp -f unicopy_rooted_trees/* rooted_trees/
 ```
 
 ### 2. Find putative duplications and extract unicopy subtrees
 
+Here the script finds potentially duplication nodes in gene trees based on the unicity criterion described in [Bigot et al. 2013] (reimplemented in [find_ancestral_duplications.py] script)
 
-
+```bash
+mkdir duplications
+# [TO ADAPT FOR COMPUTATION IN PARALLEL]
+for famgt in `ls phyml_trees/*` ; do
+python scripts_agrogenom/find_ancestral_duplications.py u $famgt nuc_alns duplications reftree 0.9 0.2
+done
+```
 
 ### References:
 [Lassalle F et al. (2016)][Lassalle et al. 2016] "Ancestral genome reconstruction reveals the history of ecological diversification in Agrobacterium.", bioRxiv, p. 034843. doi: 10.1101/034843.  
@@ -141,6 +148,7 @@ cp -f $agrodata/unicopy_rooted_trees/* $agrodata/rooted_trees
 
 [pipeline_agrogenom.csh]: https://github.com/flass/agrogenom/blob/master/pipeline/pipeline_agrogenom.csh
 [rec_to_db.py]: https://github.com/flass/agrogenom/blob/master/scripts/rec_to_db.py
+[find_ancestral_duplications.py]: https://github.com/flass/agrogenom/blob/master/scripts/find_ancestral_duplications.py
 
 [fig0]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-0.png
 [fig1]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-1.png
