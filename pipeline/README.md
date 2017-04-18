@@ -16,8 +16,8 @@ The pipeline is divided in three parts:
 *the generation of the genome database and sequence alignements and phylogenetic trees for each gene family*
 2. Species tree/gene tree reconciliations  
 *the modification and annotation of gene trees to obtain scenarios of gene family evolution over the species tree, involving gene duplication, transfer and loss (co-)events*
-3. Analysis of genome histories  
-*the definition of gene sets of interest, namely clade-specific gene sets, and their study based on their functional annotation*
+3. Functional analysis of genome histories  
+*the study of distribution of functional annotation of gene sets of interest, namely clade-specific gene sets*
 
 
 ## I. Homologous gene tree database
@@ -338,12 +338,14 @@ python scripts_agrogenom/draw_genome_contents+events.py ./synthesis/genome_synth
 ```
 That's all, done!
 
+Here is a graphical summary of that (long!) pipeline for ancestral genome reconstruction:
+
+![figall]
+
 ## III. Functional analysis of genome histories  
 
-### 1. Generate gene sets of interests
-
-
-### 2. Functional homogeneity of gene blocks
+Here is the succint description of the program for the statistical testing of clustering of genes by biochemical function in groups of co-transferred genes, as performed in the manuscript [Lassalle et al. 2016] (please refer to that paper more accurate description of the rationale). 
+The bioinformatics methods depending quite strongly on what sort of functional annotation data one would rely on, I do not propose here a simplified, generelazied syntax for using the program [score_genegroup_funsim]; for the specifics of the [Lassalle et al. 2016] study,  please see command details in the corresponding section of the script [pipeline_agrogenom.csh].
 
 
 
@@ -369,6 +371,7 @@ That's all, done!
 [find_ancestral_duplications.py]: https://github.com/flass/agrogenom/blob/master/scripts/find_ancestral_duplications.py
 [getblockevents.py]: https://github.com/flass/agrogenom/blob/master/scripts/getblockevents.py
 [ancestral_content.py]: https://github.com/flass/agrogenom/blob/master/scripts/ancestral_content.py
+[score_genegroup_funsim]: https://github.com/flass/agrogenom/blob/master/scripts/score_genegroup_funsim.py
 
 [fig0]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-0.png
 [fig1]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-1.png
@@ -377,3 +380,4 @@ That's all, done!
 [fig4]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-4.png
 [fig5]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-5.png
 [fig6]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-6.png
+[figall]: https://github.com/flass/agrogenom/blob/master/pipeline/reconciliation_pipeline_loop.svg
