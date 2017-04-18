@@ -57,6 +57,6 @@ Penel S et al. (2009) "Databases of homologous gene families for comparative gen
 [Penel et al. 2009]: https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-10-S6-S3
 [Prunier]: http://pbil.univ-lyon1.fr/software/prunier/
 
-![fig0]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-0.png
-![fig1]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-1.png
-![fig2]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-2.png
+[fig0]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-0.png
+[fig1]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-1.png
+[fig2]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-2.png
