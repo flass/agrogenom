@@ -1,5 +1,4 @@
-# agrogenom
-Python modules and scripts for the construction of Agrogenom database, a phylogenomic database focussing on the evolution of Rhizobiaceae genomes (http://phylariane.univ-lyon1.fr/db/agrogenom/3/). It notably contains information about events of gene transfer, duplication and origination and tracks the co-evolution of genes across genomes though events of co-transfer and co-duplications, modelled as 'block events'.
+Here are maintained the main Python modules and scripts for the construction of [Agrogenom database](http://phylariane.univ-lyon1.fr/db/agrogenom/3/). The full pipeline for construction of the database is described in the [pipeline section](https://github.com/flass/agrogenom/pipeline/).
 
 ['rec_to_db.py'](https://github.com/flass/agrogenom/rec_to_db.py) is an API for the loading and construction of the phylogenomic database Agrogenom from a collection of reconciled gene trees.
 [depend on tree2 Python package https://github.com/flass/tree2]
