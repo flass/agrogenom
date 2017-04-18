@@ -28,7 +28,7 @@ This reconstruction is performed via the reconciliation of gene trees with the s
 
 For this, we will rely on a step-wise procedure for the gradual reconciliation of gene trees based on a series of criteria based on (supported) topological conflict with the species tree and species distribution in clades:
 
-Let's assume we start with a rooted gene tree.  
+Let's assume we start with a rooted gene tree. (if not, one can use [TPMS] to root it with species tree-aware criteria, cf. [subsection I.1](https://github.com/flass/agrogenom/tree/master/pipeline#1-root-gene-trees))
 
 ![fig0]
 
@@ -36,7 +36,7 @@ First, putative paralogous lineages are identified based on species multiplicity
 
 ![fig1]
 
-Within each of these lineages, statistically supported topological conflict is then resolved by inferring HGT events, using [Prunier], a parsimony-based algorithm.  
+Within each of these lineages, statistically supported topological conflict is then resolved by inferring HGT events, using [Prunier], a parsimony-based algorithm [Abby et al. 2010].  
 
 ![fig2] 
 
@@ -92,15 +92,44 @@ mv tpms_db/Collection tpms_db/genetrees.rooted
 mkdir rooted_trees/
 python $scripts/split_tpms_db.py tpms_db/genetrees.rooted rooted_trees
 ```
+Because TPMS roots poorly trees in absence of duplication and presence of many transfers, one can use alternatie method: find tranfers in unicopy gene trees using [Prunier] to then re-root them consistently to the parcionious transfer scenario.
 
+```bash
+# identify unicopy gene families from nucleic alignments 
+python scripts_agrogenom/get_unicopy_fams.py nuc_alns unicopy_nuc_aln_list
+
+# prunier detection of transfers
+mkdir unicopy_prunier_out
+# use a reference species tree devoid of branch lengths and internal labels or node supports
+python -c "import tree2 ; t = tree2.Node(file='reftree') ; t.write_newick('reftree.prunier', branch_lengths=False, ignoreBS=True)"
+# [TO ADAPT FOR COMPUTATION IN PARALLEL]
+for famaln in `cat unicopy_nuc_aln_list` ; do
+fam=${famaln%%.*}
+famgt=phyml_trees/$fam.nwk
+echo $famgt >> unicopy_gene_tree_list
+PrunierFWD_linux64 input.tree.file=reftree.prunier aln.file=$famaln genetree.file=$famgt sequence.type=dna fwd.depth=2 aln.type=FASTA boot.thresh.conflict=$bsc max.bp=.90 multi_root.bool=false > unicopy_prunier_out/$fam.prout
+done
+```
+Note `multi.root.bool=false` refers to trying the reconciliation with an unique rooting of the *species tree*, which is assumed to be known; Prunier always tries all the roots of the unicopy gene tree, and returns the reconciliation given the most parsmonious rooting, hence or use of this reconciliation program here.
+
+```
+# rooting of trees as by Prunier
+mkdir unicopy_rooted_trees
+python scripts_agrogenom/root_as_prunier.py unicopy_gene_tree_list reftree unicopy_prunier_out unicopy_rooted_trees
+# replace TMPS-rooted unicopy gene tres by the Prunier-rooted ones
+cp -f $agrodata/unicopy_rooted_trees/* $agrodata/rooted_trees
+```
+
+### 2. Find putative duplications and extract unicopy subtrees
 
 
 
 
 ### References:
-Lassalle F et al.(2016) "Ancestral genome reconstruction reveals the history of ecological diversification in Agrobacterium.", bioRxiv, p. 034843. doi: 10.1101/034843.  
-Penel S et al. (2009) "Databases of homologous gene families for comparative genomics" BMC Bioinformatics, 10(S6):S3.  
-Bigot T. et al. (2013) "TPMS: a set of utilities for querying collections of gene trees", BMC Bioinformatics 14:109. doi: 10.1186/1471-2105-14-109  
+[Lassalle F et al. (2016)][Lassalle et al. 2016] "Ancestral genome reconstruction reveals the history of ecological diversification in Agrobacterium.", bioRxiv, p. 034843. doi: 10.1101/034843.  
+[Penel S et al. (2009)][Penel et al. 2009] "Databases of homologous gene families for comparative genomics" BMC Bioinformatics, 10(S6):S3.  
+[Bigot T et al. (2013)][Bigot et al. 2013] "TPMS: a set of utilities for querying collections of gene trees", BMC Bioinformatics 14:109. doi: 10.1186/1471-2105-14-109  
+[Abby SS et al. (2010)][Abby et al. 2010] "Detecting lateral gene transfers by statistical reconciliation of phylogenetic forests". 11:324-324. doi: 10.1186/1471-2105-11-324.
 
 [Lassalle et al. 2016]: http://biorxiv.org/content/early/2016/01/13/034843
 [HOGENOM databases]: http://doua.prabi.fr/databases/hogenom/home.php
@@ -108,6 +137,7 @@ Bigot T. et al. (2013) "TPMS: a set of utilities for querying collections of gen
 [Prunier]: http://pbil.univ-lyon1.fr/software/prunier/
 [TPMS]: https://github.com/tbigot/tpms
 [Bigot et al. 2013]: https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-14-109
+[Abby et al. 2010]: https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-324
 
 [pipeline_agrogenom.csh]: https://github.com/flass/agrogenom/blob/master/pipeline/pipeline_agrogenom.csh
 [rec_to_db.py]: https://github.com/flass/agrogenom/blob/master/scripts/rec_to_db.py
