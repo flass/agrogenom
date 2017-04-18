@@ -211,6 +211,7 @@ CREATE TABLE public.buildingblocks AS (SELECT chromosome, count(*) as nb_genes, 
 EOF
 
 # leaf blocks reconstruction
+mkdir ./blockevents 
 # [TO ADAPT FOR COMPUTATION IN PARALLEL]
 for i in `seq 1 20` ; do
 # every job will query a task table in the SQL db to fetch a new task; concurrent access of jobs to task table is avoided with explicit table lock
@@ -247,7 +248,7 @@ scripts_agrogenom/refine_transfer_annotation.py -d yourdbname duplications/modif
 psql -h yourservername -U yourusername -d yourdbname << EOF
 \copy phylogeny.event from './refined_trees/event_dump.tab'
 \copy phylogeny.event_possible_species_node from './refined_trees/event_possible_species_node_dump.tab'
-INSERT INTO phylogeny.reconciliation_collection VALUES ('2013-03-26', '/full/path/to/refined_trees');
+INSERT INTO phylogeny.reconciliation_collection VALUES ('reco_col_1', '/full/path/to/refined_trees');
 \copy phylogeny.represented_event FROM './refined_trees/represented_event_dump.tab'
 EOF
 ```
@@ -277,7 +278,7 @@ cp -np ./refined_trees/normed_phyloxml_trees/*.xml ./reconciliation_collection/n
 cp -np ./refined_trees/reconciled_tree_pickles/*.pickle ./reconciliation_collection/reconciled_tree_pickles/
 
 # export data as a table dump
-python scripts_agrogenom/dump_reconciliation_collection_tables.py -c ./reconciliation_collection/ -r $reftree -i '2013-04-23' -t -a
+python scripts_agrogenom/dump_reconciliation_collection_tables.py -c ./reconciliation_collection/ -r reftree -i 'reco_col_1' -t -a
 
 # final storage the reconciliation collection into database
 psql -h yourservername -U yourusername -d yourdbname << EOF
@@ -288,11 +289,13 @@ psql -h yourservername -U yourusername -d yourdbname << EOF
 EOF
 ```
 
+### 8. Finalizing and synthesis
+
 Now to finalize the phylogenomic database, we want to repeat the block event reconstruction with the final set of DTL events.
 Thus we need to clean the database from previous block event records:
 
 ```bash
-# clean database
+# connect to database
 psql -h yourservername -U yourusername -d yourdbname
 ```
 ```sql
@@ -313,23 +316,43 @@ and generate new block events:
 ```bash
 # sequential run (could be parallel, but not as many events to consider now)
 # leaf blocks reconstruction
-python scripts_agrogenom/getblockevents.py ./reconciliation_collection/reconciled_tree_pickles reftree $currentrec/blockevents 99 -c public.buildingblocks 
-python scripts_agrogenom/getblockevents.py ./reconciliation_collection/reconciled_tree_pickles reftree $currentrec/blockevents 98 -c public.buildingblocks 
+python scripts_agrogenom/getblockevents.py ./reconciliation_collection/reconciled_tree_pickles reftree ./blockevents 99 -c public.buildingblocks 
 # ancestral blocks reconstruction !!! high memory use
-python scripts_agrogenom/getblockevents.py ./reconciliation_collection/reconciled_tree_pickles reftree $currentrec/blockevents 100 -a -v -c public.buildingblocks 
+python scripts_agrogenom/getblockevents.py ./reconciliation_collection/reconciled_tree_pickles reftree ./blockevents 100 -a -v -c public.buildingblocks 
+# note job ids 99 and 100 are arbitrary and the only important thingis that they are different
+# import into db
+psql -h yourservername -U yourusername -d yourdbname < ./blockevents/getblockevent_out.a.100/blocks_db_dump/allblocktables_sqldump.sql
+```
+You can now generate synthesis files, including annotated Newick tree files, for rapid vizualization in a tree viewer like [seaview](http://doua.prabi.fr/software/seaview) (available as a package in most Debian distributions) of a particular gene family history or of the genome-wide synthesis of geneome gene content evolution.
+Output also includes tables for presence/absenceprofiles of all gene families (and most interestingly, ortholous subfamilies) at all species tree's node, ancestors and extant. There are also files listing clade-specific genes - orthologous subfamilies specifically gained by an ancestor and conserved by all its descendants.
+
+```bash
+# generate synthesis files: genome history and clade-specific gene tables
+python scripts_agrogenom/ancestral_content.py -d phylariane -p $dbpwd --input-family-history-pickles=$anccont/family_history_pickles --input-subfamily-trees=$anccont/ortho_subtrees --output-all --output-subfamily-trees=false --output-pickled-family-histories=false ./nucfam_fasta_list ./refined_trees/reconciled_tree_pickles reftree ./synthesis
 ```
 
-Done!
+You can also export the genome-wide synthesis of genome gene contents as a nice SVG output graphics!
 
-## III. Analysis of genome histories  
+```bash
+python scripts_agrogenom/draw_genome_contents+events.py ./synthesis/genome_synthesis.pickle
+```
+That's all, done!
+
+## III. Functional analysis of genome histories  
+
+### 1. Generate gene sets of interests
+
+
+### 2. Functional homogeneity of gene blocks
+
 
 
 ### References:
-[Lassalle F et al. (2016)][Lassalle et al. 2016] "Ancestral genome reconstruction reveals the history of ecological diversification in Agrobacterium.", bioRxiv, p. 034843. doi: 10.1101/034843.  
-[Penel S et al. (2009)][Penel et al. 2009] "Databases of homologous gene families for comparative genomics" BMC Bioinformatics, 10(S6):S3.  
-[Bigot T et al. (2013)][Bigot et al. 2013] "TPMS: a set of utilities for querying collections of gene trees", BMC Bioinformatics 14:109. doi: 10.1186/1471-2105-14-109  
-[Abby SS et al. (2010)][Abby et al. 2010] "Detecting lateral gene transfers by statistical reconciliation of phylogenetic forests". 11:324-324. doi: 10.1186/1471-2105-11-324.
-[Csuros M (2008)][Csuros 2008] ""
+ [Lassalle F et al. (2016)][Lassalle et al. 2016] "Ancestral genome reconstruction reveals the history of ecological diversification in Agrobacterium.", bioRxiv, p. 034843. doi: 10.1101/034843.  
+ [Penel S et al. (2009)][Penel et al. 2009] "Databases of homologous gene families for comparative genomics" BMC Bioinformatics, 10(S6):S3.  
+ [Bigot T et al. (2013)][Bigot et al. 2013] "TPMS: a set of utilities for querying collections of gene trees", BMC Bioinformatics 14:109. doi: 10.1186/1471-2105-14-109  
+ [Abby SS et al. (2010)][Abby et al. 2010] "Detecting lateral gene transfers by statistical reconciliation of phylogenetic forests". 11:324-324. doi: 10.1186/1471-2105-11-324.
+ [Csűrös M (2008)][Csuros 2008] "Ancestral Reconstruction by Asymmetric Wagner Parsimony over Continuous Characters and Squared Parsimony over Distributions", in Nelson, C. E. and Vialette, S. (eds) Comparative Genomics. Springer Berlin Heidelberg (Lecture Notes in Computer Science, 5267), pp. 72–86.
 
 [Lassalle et al. 2016]: http://biorxiv.org/content/early/2016/01/13/034843
 [HOGENOM databases]: http://doua.prabi.fr/databases/hogenom/home.php
@@ -339,7 +362,7 @@ Done!
 [Bigot et al. 2013]: https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-14-109
 [Abby et al. 2010]: https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-324
 [Agrogenom]: http://phylariane.univ-lyon1.fr/db/agrogenom/3/
-[Csuros 2008]: 
+[Csuros 2008]: http://link.springer.com/chapter/10.1007/978-3-540-87989-3_6
 
 [pipeline_agrogenom.csh]: https://github.com/flass/agrogenom/blob/master/pipeline/pipeline_agrogenom.csh
 [rec_to_db.py]: https://github.com/flass/agrogenom/blob/master/scripts/rec_to_db.py

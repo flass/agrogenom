@@ -558,6 +558,8 @@ cd $blocks/getblockevent_out.a.81/
 foreach file (`ls blocks_db_dump/*`)
 sed -e "s/'//g" $file > $file.2
 end
+# load in db
+psql -h $yourservername -U $yourusername -d $yourdbname < $ancblocks/blocks_db_dump/allblocktables_sqldump.sql
 # make a backup the database schema and data at this step
 pg_dump -U $yourusername -h $yourservername -f $agrodata/database/agrogenom_dump_210213.tar -F t agrogenom
 
@@ -625,6 +627,11 @@ delete from phylogeny.event where event_id in (select distinct(event_id) from re
 -- superfluous transfers
 delete from phylogeny.event where event_id in (select distinct(event_id) from repr_evt LEFT JOIN analysis.prunier_inference USING (event_id) where event_type='T' AND prinf_id IS NULL AND rec_col_id IS NULL);
 
+
+#################################
+# II.8 # Finalizing and synthesis
+#################################
+
 ## regenrates blocks with new events documented
 # clean database
 psql -h $yourservername -U $yourusername -d $yourdbname
@@ -662,19 +669,20 @@ pg_dump -U $yourusername -f agrogenomdb_240413.dump.tar -F t agrogenom
 # generate synthesis files: genome history and clade-specific gene tables
 python $scripts/ancestral_content.py -d phylariane -p $dbpwd --input-family-history-pickles=$anccont/family_history_pickles --input-subfamily-trees=$anccont/ortho_subtrees --output-all --output-subfamily-trees=false --output-pickled-family-histories=false $agrodata/nucfam_fasta_list $currentrec/refined_trees_260313/reconciled_tree_pickles $reftree $anccont/synthesis >& $currentrec/ancestral_content_230413.synthesis.oe
 
-# load subfamily informations into DB
-cd $anccont/synthesis/
-psql -h $yourservername -U $yourusername -d $yourdbname
-\copy genome.gene2subfam from 'ortho_subfam_leaves.tab'
-\copy phylogeny.event2subfam from 'ortho_subfam_events.tab'
 
 ######################################
 # III # Ananalysis of genome histories
 ######################################
 
 #########################################
-# III.1 # Generate gene sets of interests
+# III.1 # Load gene sets into database
 #########################################
+
+# load subfamily informations into DB
+cd $anccont/synthesis/
+psql -h $yourservername -U $yourusername -d $yourdbname
+\copy genome.gene2subfam from 'ortho_subfam_leaves.tab'
+\copy phylogeny.event2subfam from 'ortho_subfam_events.tab'
 
 # dump phylogenetic profile and clade-specific gene sets to DB
 # create dump data files
