@@ -8,7 +8,7 @@ Typically, the way input data - from genome sequence and annotation up to homolo
 
 Also, the way parallel calculation is implemented is very specific to anyone's computational environment - e.g. if using a computer cluster, what kind of job scheduler system is used? - and should be adapted accordingly. This should be fairly straightforward, given the parallelization relies on the fondamentally parallel structure of the data, typically the many gene families are considered independent for several long computational steps like sequence alignement, gene tree inference and gene tree/species tree reconciliation - in fact only the last step of block event reconstruction consider the gene families jointly.  
 
-Thus, one should consider the following code as a loose manual to perform inferences and analyses as described in [Lassalle et al. 2016]; to replicate the work from this study, please refer to the more detailed script [pipeline_agrogenom.csh] (which is also  more a blueprint for manual execution of the pipeline with steps to adapt than an all-in-one executable).  
+Thus, one should consider the following code as a template manual to perform inferences and analyses as described in [Lassalle et al. 2016]; to exactly replicate the work from this study please refer to the more detailed script [pipeline_agrogenom.csh], which is also  annotated with details on intermediate results of that particular study.  
 
 The pipeline is divided in three parts:
   
@@ -352,8 +352,8 @@ The bioinformatics methods depending quite strongly on what sort of functional a
  [Lassalle F et al. (2016)][Lassalle et al. 2016] "Ancestral genome reconstruction reveals the history of ecological diversification in Agrobacterium.", bioRxiv, p. 034843. doi: 10.1101/034843.  
  [Penel S et al. (2009)][Penel et al. 2009] "Databases of homologous gene families for comparative genomics" BMC Bioinformatics, 10(S6):S3.  
  [Bigot T et al. (2013)][Bigot et al. 2013] "TPMS: a set of utilities for querying collections of gene trees", BMC Bioinformatics 14:109. doi: 10.1186/1471-2105-14-109  
- [Abby SS et al. (2010)][Abby et al. 2010] "Detecting lateral gene transfers by statistical reconciliation of phylogenetic forests". 11:324-324. doi: 10.1186/1471-2105-11-324.
- [Csűrös M (2008)][Csuros 2008] "Ancestral Reconstruction by Asymmetric Wagner Parsimony over Continuous Characters and Squared Parsimony over Distributions", in Nelson, C. E. and Vialette, S. (eds) Comparative Genomics. Springer Berlin Heidelberg (Lecture Notes in Computer Science, 5267), pp. 72–86.
+ [Abby SS et al. (2010)][Abby et al. 2010] "Detecting lateral gene transfers by statistical reconciliation of phylogenetic forests". 11:324-324. doi: 10.1186/1471-2105-11-324.  
+ [Csűrös M (2008)][Csuros 2008] "Ancestral Reconstruction by Asymmetric Wagner Parsimony over Continuous Characters and Squared Parsimony over Distributions", in Nelson, C. E. and Vialette, S. (eds) Comparative Genomics. Springer Berlin Heidelberg (Lecture Notes in Computer Science, 5267), pp. 72–86.  
 
 [Lassalle et al. 2016]: http://biorxiv.org/content/early/2016/01/13/034843
 [HOGENOM databases]: http://doua.prabi.fr/databases/hogenom/home.php
@@ -382,3 +382,4 @@ The bioinformatics methods depending quite strongly on what sort of functional a
 [fig5]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-5.png
 [fig6]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-6.png
 [figall]: https://github.com/flass/agrogenom/blob/master/pipeline/reconciliation_pipeline_loop.pdf
+
