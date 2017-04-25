@@ -8,6 +8,6 @@ The [pipeline/] section decribes extensively the procedure for generating the da
 Authors: Florent Lassalle, Rémi Planel.
 contact: [f.lassalle@imperial.ac.uk](mailto:f.lassalle@imperial.ac.uk)
 
-[Lassalle et al. 2016]: http://biorxiv.org/content/early/2016/01/13/034843
+[Lassalle et al. 2016]: http://biorxiv.org/content/early/2016/10/20/034843
 [pipeline/]: https://github.com/flass/agrogenom/blob/master/pipeline/
 [scripts/]: https://github.com/flass/agrogenom/blob/master/scripts/

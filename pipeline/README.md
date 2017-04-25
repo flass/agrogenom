@@ -355,7 +355,7 @@ The bioinformatics methods depending quite strongly on what sort of functional a
  [Abby SS et al. (2010)][Abby et al. 2010] "Detecting lateral gene transfers by statistical reconciliation of phylogenetic forests". 11:324-324. doi: 10.1186/1471-2105-11-324.  
  [Csűrös M (2008)][Csuros 2008] "Ancestral Reconstruction by Asymmetric Wagner Parsimony over Continuous Characters and Squared Parsimony over Distributions", in Nelson, C. E. and Vialette, S. (eds) Comparative Genomics. Springer Berlin Heidelberg (Lecture Notes in Computer Science, 5267), pp. 72–86.  
 
-[Lassalle et al. 2016]: http://biorxiv.org/content/early/2016/01/13/034843
+[Lassalle et al. 2016]: http://biorxiv.org/content/early/2016/10/20/034843
 [HOGENOM databases]: http://doua.prabi.fr/databases/hogenom/home.php
 [Penel et al. 2009]: https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-10-S6-S3
 [Prunier]: http://pbil.univ-lyon1.fr/software/prunier/
