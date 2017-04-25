@@ -45,10 +45,12 @@ setenv sqldbname yourdbname
 
 ## [TO DO YOURSELF / TO ADAPT TO YOUR PROJECT] 
 # dowloaded 49 flat files of annotated genomic sequences in EMBL format (14/04/2012)
-cp data_agrogenom/genome_flat_files.tar.gz $acnucraw/flat_files/
+cd $acnucraw/flat_files/
+# made availble on figshare.com
+wget https://ndownloader.figshare.com/files/8252768
 
 # set 5-letter code identifier (by matching taxid from UniProt speclist file or by creating a new one for new sequences)
-cp data_agrogenom/code5/$dbname.code $agrodata/code5/
+cp pipeline/database/code5/$dbname.code $agrodata/code5/
 
 ## use of ACNUC database for (sub-)sequence query and retrieval ; references:
 # Gouy M et al. 1985. ACNUC–a portable retrieval system for nucleic acid sequence databases: logical and physical designs and usage. Comput. Appl. Biosci. 1:167–172.

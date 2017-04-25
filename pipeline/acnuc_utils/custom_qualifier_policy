@@ -1,0 +1,15 @@
+Qualifier = GENE_FAMILY
+Use_Value = True
+Parent_Keyword = GENE_FAMILY
+
+Qualifier = DB_XREF
+Use_Value = True
+Parent_Keyword = CROSS REFERENCES
+
+Qualifier = PROTEIN_ID
+Use_Value = True
+Parent_Keyword = PROTEIN IDS
+
+Qualifier =  %(C+G)
+Use_Value = True
+Parent_Keyword = CG_CONTENTS

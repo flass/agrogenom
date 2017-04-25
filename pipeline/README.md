@@ -24,6 +24,7 @@ The pipeline is divided in three parts:
 
 The procedure is the same than for [HOGENOM databases], which is described in the [Penel et al. 2009] paper and with updated details of the database releases [here](http://doua.prabi.fr/databases/hogenom/home.php?contents=methods).  
 For that reason, the procedure will not be described on this page. For the details of the procedure that was used in [Lassalle et al. 2016], please refer to the [pipeline_agrogenom.csh] script.  
+The source dataset and intermediary result files can be found at the corresponding [Figshare project].
 
 ## II. Species tree/gene tree reconciliations
 
@@ -373,6 +374,7 @@ The bioinformatics methods depending quite strongly on what sort of functional a
 [ancestral_content.py]: https://github.com/flass/agrogenom/blob/master/scripts/ancestral_content.py
 [score_genegroup_funsim]: https://github.com/flass/agrogenom/blob/master/scripts/score_genegroup_funsim.py
 [tree2]: https://github.com/flass/tree2
+[Figshare project]: https://figshare.com/projects/Ancestral_genome_reconstruction_reveals_the_history_of_ecological_diversification_in_Agrobacterium/20894
 
 [fig0]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-0.png
 [fig1]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-1.png
