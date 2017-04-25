@@ -1,0 +1,39 @@
+#!/bin/csh
+setenv scripts /pandata/lassalle/agrogenom/scripts 
+setenv tachelist $1
+setenv alns $2
+setenv results $3
+setenv reftree $4
+setenv logs $5
+setenv queue $6
+
+if ( ! -d $results ) then
+mkdir $results
+endif
+
+# save version of tree2 Python library for ability to reload pickled tree2 objects
+set libdate = `date +%d%m%y`
+cp /panhome/lassalle/python_lib/tree2.py $results/tree2.py.$libdate
+
+# nq = nb d'heures du job
+set nq = 0
+
+if ($queue == "q1hour") then
+set nq = 1
+endif
+
+if ($queue == "q1day") then
+set nq = 24
+endif
+
+if ($queue == "q1week") then
+set nq = 168
+endif
+
+set j = 1
+foreach tache (`cat $tachelist`)
+qsub -q $queue -N finddupS.$j -e $logs/finddupS.$j.stderr -o $logs/finddupS.$j.stdout << EOF
+$scripts/finddup_simple.csh $tache $alns $results $reftree $nq
+EOF
+@ j = $j + 1
+end

@@ -1,0 +1,53 @@
+#!/bin/csh
+
+if ( $5 == "") then
+echo "Usage: raxml_simple.qsub path/big_alignment path/results path/log_dir nb_jobs nb_bootstraps/jobs queue aln_format [path/file_containing_options_to_be_passed_to_RAxML]"
+exit(1)
+
+endif
+
+
+setenv tache $1
+setenv results $2
+setenv logs $3
+setenv nbjobs $4
+setenv nbs $5
+setenv queue $6
+setenv alnformat $7
+setenv raxmloptfile $8
+
+
+if ( $raxmloptfile == "") then
+	setenv raxmlopt "-m GTRGAMMA -f d"
+else
+	setenv raxmlopt "`cat $raxmloptfile`"
+endif
+
+if (! -e $tache ) then
+echo "File  $tache is missing"
+exit(1)
+endif
+
+if (! -d $results) then
+mkdir $results
+endif
+
+if (! -d $logs) then
+mkdir $logs
+endif
+
+echo $nbjobs jobs with $nbs bootstrap each
+set j = 1
+while ( $j <= $nbjobs )
+set job = "qsub -N raxml_big.$j -q $queue -o $logs/raxml_big.$j.stdout -e $logs/raxml_big.$j.stderr"
+echo $job
+echo "RAxML options	: $raxmlopt -N $nbs -x 12345$j"
+$job << EOF
+\cp /pandata/lassalle/agrogenom/scripts/raxml_simple.csh .
+chmod u+x ./raxml_simple.csh
+echo "$raxmlopt -N $nbs -x 12345$j" > ./raxmloptfile
+echo "lance le script"
+./raxml_simple.csh $tache $results $alnformat $j ./raxmloptfile
+EOF
+@ j = $j + 1
+end

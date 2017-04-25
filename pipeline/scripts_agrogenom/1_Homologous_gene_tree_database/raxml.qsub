@@ -1,0 +1,88 @@
+#!/bin/csh
+
+if ( $5 == "") then
+echo "Usage: raxml.qsub path/input_dir list path/results begin end [log]"
+
+exit(1)
+
+endif
+
+setenv queue "q1day"
+
+set current = $1
+set taches  = $2
+set results = $3
+
+set begin = $4
+set end = $5
+
+if (! -d $current ) then
+echo "Directory $current is missing"
+exit(1)
+endif
+
+
+if (! -e $current/$taches ) then
+echo "File  $current/$taches is missing"
+exit(1)
+endif
+
+
+if (! -d $results) then
+mkdir $results
+endif
+
+
+if ( $6 == "") then
+setenv log "/panhome/lassalle/log"
+else
+setenv log $6
+endif
+
+if (! -d $log) then
+mkdir $log
+endif
+
+set nber = 0
+
+# nq = nb d'heures du job
+set nq = 0
+
+if ($queue == "q1hour") then
+set nq = 1
+endif
+
+if ($queue == "q1day") then
+set nq = 24
+endif
+
+if ($queue == "q1week") then
+set nq = 168
+endif
+
+if ($nq  == 0 ) then 
+	echo "Error: Queue $queue is not correct"
+	@ nber = $nber + 1
+endif
+
+if ($nber > 0) then
+	echo "EXIT"
+	exit(1)
+endif
+
+echo "Queue $queue selected ($nq hours)"
+
+
+set j = $begin
+while ($j <= $end)
+
+set job = "qsub -N phyml.$j -q $queue -o $log/phyml.$j.stdout -e $log/phyml.$j.stderr"
+echo $job
+$job << EOF
+\cp /pandata/lassalle/agrogenom/scripts/raxml.csh .
+chmod u+x ./raxml.csh
+echo "lance le script"
+./raxml.csh $current $taches $results $nq
+EOF
+@ j = $j + 1
+end

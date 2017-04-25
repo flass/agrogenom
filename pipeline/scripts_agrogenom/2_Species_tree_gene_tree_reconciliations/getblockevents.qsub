@@ -1,0 +1,101 @@
+#!/bin/csh
+
+if ( $8 == "" ) then
+echo "Usage: getblocksevents.csh dirtreepickles reftree dirout logs queue nbjob repliconchecktable l|a [skipevents]"
+exit(2)
+endif
+
+set dirtreepickles = $1
+set reftree = $2
+set dirout = $3
+set logs = $4
+set queue = $5
+set nbjob = $6
+set repliconchecktable = $7
+set blocktype = $8
+if ( $9 != "" ) then
+	set sevty = "-e $9"
+else
+	set sevty = ""
+endif
+
+stty -echo
+echo "agrogenom PostgreSQL database password? "
+set dbpw=$<
+#~ echo  "pbil-sgbd:*:agrogenom:lassalle:$dbpw" > $HOME/.pgpass
+echo  "192.168.100.99:*:agrogenomdb:agrogenomadmin:$dbpw" > $HOME/.pgpass
+chmod 600 $HOME/.pgpass
+
+if ($blocktype == 'l') then
+	#~ set nbrepli = `psql -h pbil-sgbd -U lassalle -d agrogenom -w -t -A -c "SELECT count(*) FROM $repliconchecktable WHERE current_status!=2;"`
+	set nbrepli = `psql -h 192.168.100.99 -U agrogenomadmin -d agrogenomdb -w -t -A -c "SELECT count(*) FROM $repliconchecktable WHERE current_status!=2;"`
+	set stexec = $status
+	echo "$nbrepli replicons remain to be processed"
+	set btype = ""
+else if ($blocktype == 'a') then
+	#~ set nbrepli = `psql -h pbil-sgbd -U lassalle -d agrogenom -w -t -A -c "SELECT count(*) FROM $repliconchecktable WHERE current_status=2;"`
+	set nbrepli = `psql -h 192.168.100.99 -U agrogenomadmin -d agrogenomdb -w -t -A -c "SELECT count(*) FROM $repliconchecktable WHERE current_status=2;"`
+	set stexec = $status
+	echo "$nbrepli replicons will be used for ancestral block construction"
+	set btype = "-a -v"
+if ($stexec > 0 ) then
+	exit(2)
+#~ else
+	#~ echo "Run ANALYSE on database tables for efficiency optimization"
+	#~ psql -h pbil-sgbd -U lassalle -d agrogenom -w -t -A -c "ANALYSE;"
+endif
+endif
+endif
+\rm $HOME/.pgpass
+
+set nber = 0
+# nq = nb d'heures du job
+set nq = 0
+if ($queue == "q1hour") then
+set nq = 1
+endif
+if ($queue == "q1day") then
+set nq = 24
+endif
+if ($queue == "q1week") then
+set nq = 168
+endif
+if ($queue == "q1month") then
+set nq = 5040
+endif
+if ($nq  == 0 ) then 
+	echo "Error: Queue $queue is not correct"
+	@ nber = $nber + 1
+endif
+
+if ($nber > 0) then
+	echo "EXIT"
+	exit(1)
+endif
+echo "Queue $queue selected ($nq hours)"
+
+
+set i = 1
+@ j = $i + $nbjob
+while ($i < $j)
+# increment jobid to never overwrite results from previous jobs and always get a new job identifier
+while ( -d $dirout/getblockevent_out.l.$i | -d $dirout/getblockevent_out.a.$i )
+@ i = $i + 1
+@ j = $j + 1
+end
+#~ echo "python ./getblockevents.py $dirtreepickles $reftree $dirout $i -t $dirxmltrees -p $dbpw -q $nq -c $repliconchecktable $btype $sevty"
+echo "qsub -N blockevent.$blocktype.$i -q $queue -e $logs/getblockevent.$blocktype.$i.stderr -o $logs/getblockevent.$blocktype.$i.stdout"
+qsub -l nodes=1:dodeca -N blockevent.$blocktype.$i -q $queue -e $logs/getblockevent.$blocktype.$i.stderr -o $logs/getblockevent.$blocktype.$i.stdout << EOF
+\cp $scripts/getblockevents.py .
+\cp $scripts/rec_to_db.py .
+\cp $HOME/python_lib/blockevents.py .
+mkdir -p tree2
+\cp $HOME/python_lib/tree2/*.py tree2/
+set cwd = `pwd`
+set PYTHONPATH = $cwd\:$PYTHONPATH
+echo "PYTHONPATH:" $PYTHONPATH
+python ./getblockevents.py $dirtreepickles $reftree $dirout $i -d phylarianne -p $dbpw -q $nq -c $repliconchecktable $btype $sevty
+EOF
+@ i = $i + 1
+sleep 2s
+end

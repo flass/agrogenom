@@ -1,0 +1,91 @@
+#!/bin/csh
+
+if ( $8 == "") then
+	echo "Usage: phyml_simple.qsub path/input_dir list path/Gblocks_results path/PhyML_results path/log_dir begin queue [aln_format]"
+	echo "NB: if 'path/Gblocks_results' is not an existing directory, Gblocks triming will not be made"
+	exit(2)
+endif
+
+set current = $1
+set taches  = $2
+set gbresults = $3
+set treeresults = $4
+set log = $5
+
+set begin = $6
+set queue = $7
+set format = $8
+
+echo $format
+
+#if (! -d $current ) then
+#echo "Directory $current is missing"
+#exit(1)
+#endif
+#
+#
+#if (! -e $current/$taches ) then
+#echo "File  $current/$taches is missing"
+#exit(1)
+#endif
+
+# if no existing directory is provided, Gblocks triming will not be made
+#~ if (! -d $gbresults) then
+#~ mkdir $gbresults
+#~ endif
+
+if (! -d $treeresults) then
+mkdir $treeresults
+endif
+
+if (! -d $log) then
+mkdir $log
+endif
+
+set nber = 0
+
+# nq = nb d'heures du job
+set nq = 0
+
+if ($queue == "q1hour") then
+set nq = 1
+endif
+
+if ($queue == "q1day") then
+set nq = 24
+endif
+
+if ($queue == "q1week") then
+set nq = 168
+endif
+
+if ($queue == "q1month") then
+set nq = 720
+endif
+
+if ($nq  == 0 ) then 
+	echo "Error: Queue $queue is not correct"
+	@ nber = $nber + 1
+endif
+
+if ($nber > 0) then
+	echo "EXIT"
+	exit(1)
+endif
+
+echo "Queue $queue selected ($nq hours)"
+
+
+set j = $begin
+foreach tache ( `cat $current/$taches` )
+
+set job = "qsub -N phyml.$j -q $queue -o $log/phyml.$j.stdout -e $log/phyml.$j.stderr"
+echo $job
+$job << EOF
+\cp /pandata/lassalle/agrogenom/scripts/phyml_simple.csh .
+chmod u+x ./phyml_simple.csh
+echo "lance le script"
+./phyml_simple.csh $current $tache $gbresults $treeresults $nq $format
+EOF
+@ j = $j + 1
+end

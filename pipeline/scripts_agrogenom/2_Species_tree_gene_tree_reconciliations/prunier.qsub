@@ -1,0 +1,102 @@
+#!/bin/csh
+
+if ( $8 == "") then
+echo "Usage: prunier.qsub path/gene.aln_list path/ref.tree path/results_dir path/log_dir queue begin end mol.type conflict.threshold [path/gene.tree_dir] [worker] [max.bootstrap]"
+
+exit(1)
+
+endif
+
+setenv taches $1
+setenv reftree $2
+setenv results $3
+setenv log $4
+
+setenv queue $5
+setenv begin $6
+setenv end $7
+
+setenv moltype $8
+setenv bsc $9
+
+#~ if (! -e $taches ) then
+	#~ echo "File $taches is missing"
+	#~ exit(1)
+#~ endif
+
+if (! -e $reftree ) then
+	echo "File $reftree is missing"
+	exit(1)
+endif
+
+if (! -d $results) then
+	mkdir $results
+endif
+
+if ( $10 == "" ) then
+	set treedir = "none"
+else
+	set treedir = $10
+endif	
+if ( $treedir == 'none' ) then
+	echo 'no tree directory'
+else
+	if (! -d $treedir) then
+		echo "Directory $treedir is missing"
+		exit(1)
+	endif
+endif
+
+if ( $11 == "" ) then
+	set workeropt = ""
+else
+	set workeropt = "-l nodes=$11 "
+endif
+
+# bs = max bootstrap values in gene trees, defaults to PhyML-made trees
+if ( $12== "" ) then
+	set bs = 1
+else
+	set bs = $12
+endif
+
+
+# nq = nb d'heures du job
+set nq = 0
+
+if ($queue == "q1hour") then
+	set nq = 1
+endif
+
+if ($queue == "q1day") then
+	set nq = 24
+endif
+
+if ($queue == "q1week") then
+	set nq = 168
+endif
+
+if ($nq == 0 ) then 
+	echo "Error: Queue $queue is not correct"
+	exit(1)
+endif
+
+set j = $begin
+
+echo "Start Prunier calculation from job $begin to job $end"
+echo "List of tasks (gene alignments) = $taches"
+echo "Dir of gene trees = $treedir"
+echo "Reference tree = $reftree"
+echo "Results dir = $results"
+echo "Log dir = $log"
+
+while ($j <= $end)
+echo "qsub -N prunier.$j -q $queue -o $log/prunier.$j.stdout -e $log/prunier.$j.stderr $workeropt"
+qsub -N prunier.$j -q $queue -o $log/prunier.$j.stdout -e $log/prunier.$j.stderr $workeropt << eof
+ls /pandata/lassalle/agrogenom/scripts/prunier.csh
+cp /pandata/lassalle/agrogenom/scripts/prunier.csh  .
+chmod u+x ./prunier.csh
+./prunier.csh $taches $results $reftree $moltype $treedir $nq $bsc $bs
+eof
+@ j = $j + 1
+end

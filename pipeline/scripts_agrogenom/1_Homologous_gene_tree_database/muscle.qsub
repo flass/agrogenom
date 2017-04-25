@@ -1,0 +1,56 @@
+#!/bin/csh
+
+if ( $5 == "") then
+echo "Usage: muscle.qsub path/input_list path/results_dir begin end path/log_dir q1truc [worker]"
+
+exit(1)
+
+endif
+
+set taches  = $1
+set results = $2
+
+set begin = $3
+set end = $4
+
+setenv log $5
+
+
+if (! -e $taches ) then
+	set lead = `python -c "print '$taches'[:4]"`
+	if ( $lead != '/pan' ) then
+		echo "File $taches is not in panassas shared disk system"
+	else
+		echo "File $taches is missing"
+		exit(1)
+	endif
+endif
+
+if (! -d $results) then
+mkdir $results
+endif
+
+setenv queue $6
+
+if ( $7 == "" ) then
+setenv workon ""
+else
+setenv workon "-l nodes=$7 "
+endif
+
+
+set j = $begin
+
+echo "Start muscle calculation from job $begin to job $end"
+echo "List of tasks = $taches"
+echo "Results dir = $results"
+while ($j <= $end)
+
+echo Lance qsub -q $queue
+qsub -N muscle.$j -q $queue -o $log/muscle.$j.stdout -e $log/muscle.$j.stderr $workon << eof
+ls /pandata/lassalle/agrogenom/scripts/muscle.csh
+echo lance le script
+/pandata/lassalle/agrogenom/scripts/muscle.csh $taches $results
+eof
+@ j = $j + 1
+end

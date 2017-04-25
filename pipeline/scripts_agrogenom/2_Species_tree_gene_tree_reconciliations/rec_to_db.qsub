@@ -1,0 +1,96 @@
+#!/bin/csh
+
+if ( $12 == "" ) then
+	echo "Usage:python rec_to_db.qsub job_survey_table path/dir_subtrees path/dirsubtree2leafdict path/dir_prunier.out path/multiroot_reftree #root path/outfiles_dir minbs begin_job_range end_job_range job_queue dir_logs"
+	exit(2)
+endif
+
+
+set jobtable = $1
+set dirst = $2
+set dirstld = $3
+set dirprout = $4
+set reftree = $5
+set nroot = $6
+set dirout = $7
+set minbs = $8
+
+set beg = $9
+set end = $10
+set queue = $11
+set logs = $12
+
+set nber = 0
+
+stty -echo
+echo "agrogenom PostgreSQL database password? "
+set dbpw=$<
+echo  "pbil-sgbd:*:agrogenom:lassalle:$dbpw" > $HOME/.pgpass
+chmod 600 $HOME/.pgpass
+# database password verification
+set ngt = `psql -U lassalle -h pbil-sgbd -d agrogenom -w -t -c "SELECT count(*) FROM $jobtable where current_status!=2;"`
+set stexec = $status
+\rm $HOME/.pgpass
+stty echo
+if ($stexec > 0) then
+	echo "Error: agrogenom PostgreSQL database password is not correct"
+	@ nber = $nber + 1
+else
+	echo "$ngt gene trees remain to be processed in database"
+endif
+
+# nq = nb d'heures du job
+set nq = 0
+if ($queue == "q1hour") then
+set nq = 1
+endif
+if ($queue == "q1day") then
+set nq = 24
+endif
+if ($queue == "q1week") then
+set nq = 168
+endif
+if ($queue == "q1month") then
+set nq = 720
+endif
+if ($nq  == 0 ) then 
+	echo "Error: Queue $queue is not correct"
+	@ nber = $nber + 1
+endif
+
+if ($nber > 0) then
+	echo "EXIT"
+	exit(1)
+endif
+echo "Queue $queue selected ($nq hours)"
+
+echo jobtable = $jobtable
+echo dirst = $dirst
+echo dirstld = $dirstld
+echo dirprout = $dirprout
+echo reftree = $reftree
+echo nroot = $nroot
+echo dirout = $dirout
+echo minbs = $minbs
+echo beg = $beg
+echo end = $end
+echo queue = $queue
+echo nq = $nq
+echo logs = $logs
+
+mkdir -p $dirout/normed_phyloxml_trees
+mkdir -p $dirout/reconciled_tree_pickles
+#~ mkdir -p $dirout/sql_dump
+
+foreach i (`seq $beg $end`)
+#~ set sgbddown = `grep -c 'could not translate host name "pbil-sgbd" to address: Name or service not known' $logs/rec_to_db.$i.stderr`
+#~ if ($sgbddown > 0) then
+sleep 3s
+echo "qsub -q $queue -N rec_to_db.$i -o $logs/rec_to_db.$i.stdout -e $logs/rec_to_db.$i.stderr"
+qsub -q $queue -N rec_to_db.$i -o $logs/rec_to_db.$i.stdout -e $logs/rec_to_db.$i.stderr << EOF
+\cp $scripts/rec_to_db.py .
+echo "python rec_to_db.py --task.survey.table=$jobtable --dir.subtrees=$dirst --dir.subtree2leaf.dict=$dirstld --dir.prunier.out=$dirprout --reference.tree=$reftree --jobid=$i --dir.output=$dirout --queue=$nq -n $nroot -b $minbs -w ****"
+python rec_to_db.py --task.survey.table=$jobtable --dir.subtrees=$dirst --dir.subtree2leaf.dict=$dirstld --dir.prunier.out=$dirprout --reference.tree=$reftree --jobid=$i --dir.output=$dirout --queue=$nq -n $nroot -b $minbs -w $dbpw
+EOF
+#~ endif
+end
