@@ -340,12 +340,16 @@ Output also includes tables for presence/absenceprofiles of all gene families (a
 python scripts_agrogenom/ancestral_content.py -d phylariane -p $dbpwd --input-family-history-pickles=$anccont/family_history_pickles --input-subfamily-trees=$anccont/ortho_subtrees --output-all --output-subfamily-trees=false --output-pickled-family-histories=false ./nucfam_fasta_list ./refined_trees/reconciled_tree_pickles reftree ./synthesis
 ```
 
-Find example results for Agrogenom study on [Figshare](https://doi.org/10.6084/m9.figshare.4924439.v2).
+Find example results for Agrogenom study on [Figshare](https://doi.org/10.6084/m9.figshare.4924439.v2).  
+
 You can also export the genome-wide synthesis of genome gene contents as a nice SVG output graphics!
 
 ```bash
 python scripts_agrogenom/draw_genome_contents+events.py ./synthesis/genome_synthesis.pickle
 ```
+
+Find example of rendering for Agrogenom study on [Figshare](https://doi.org/10.6084/m9.figshare.4924433.v2).  
+
 ------------------
 
 That's all, done!
