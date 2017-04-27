@@ -126,7 +126,7 @@ $scritps/complete_taxid_in_embl.py $acnucfam/flat_files/$dbname.dat_091112 $agro
 # build a new ACNUC database
 cd $agrodata
 # require 'custom_qualifier_policy' file to specify that the gene family field must be indexed
-# to be copied from 'data_agrogenom/acnuc/custom_qualifier_policy' into '$agrodata/acnuc/hfxfams/index/' directory
+# to be copied from 'pipeline/acnuc_utils/custom_qualifier_policy' into '$agrodata/acnuc/hfxfams/index/' directory
 cat $agrodata/acnuc/hfxfams/index/custom_qualifier_policy
 $scripts/build_agrogenom_acnuc.csh $acnucfam >& $acnucfam/build.log 
 
@@ -483,7 +483,7 @@ $scripts/prunier.qsub $currentrec/subalns_fasta_list $agrodata/reftree/$subdbnam
 #   and integrated into one single gene tree reconciliation;
 # - for the need of the db upload procedure (see below), reconciliation scenarios need to be complete, i.e. that every node of the gene tree has an avent associated to it.
 #	For this reason, these reconciliations are completed (i.e. remaining unexplained topological conflict between the gene tree and the species tree)
-#   by infering additional HGT based on minimization of subtrees taxonomic depth (using XD algorithm from TPMS (Bigot et al. 2013) as re-implemented in this script).
+#   by infering additional HGT based on minimization of subtrees taxonomic depth (using taxonomic incongruence scoring algorithm from TPMS (Bigot et al. 2013) as re-implemented in this script).
 #   Note however that this inference will be re-made at step II.7, based on the final set of inferred HGT events. This step of the procedure thus leads to infering
 #	events that have no final value, and for this reason, it is not described in the pipeline summary
 # - load detailed (e.g. source of HGT inference, mapping of unicopy subtrees) and global (list of all events per node) reconciliation 
@@ -559,6 +559,7 @@ cd $blocks/getblockevent_out.a.81/
 # modify table formats (enum() types must not be quoted)
 foreach file (`ls blocks_db_dump/*`)
 sed -e "s/'//g" $file > $file.2
+rm $file ; mv $file.2 $file
 end
 # load in db
 psql -h $yourservername -U $yourusername -d $yourdbname < $ancblocks/blocks_db_dump/allblocktables_sqldump.sql
