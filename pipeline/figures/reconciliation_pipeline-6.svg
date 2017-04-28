@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="201.52246mm"
-   height="162.74945mm"
-   viewBox="0 0 714.05603 576.67126"
+   width="212.49341mm"
+   height="165.6291mm"
+   viewBox="0 0 752.92947 586.87476"
    id="svg8319"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="reconciliation_pipeline-5.svg">
+   sodipodi:docname="reconciliation_pipeline-6.svg">
   <defs
      id="defs8321">
     <clipPath
@@ -568,8 +568,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="177.48558"
-     inkscape:cy="284.7042"
+     inkscape:cx="476.39924"
+     inkscape:cy="152.54763"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -585,7 +585,7 @@
      showguides="true"
      inkscape:guide-bbox="true">
     <sodipodi:guide
-       position="479.85579,345.84538"
+       position="518.72917,356.0489"
        orientation="0,1"
        id="guide22542" />
   </sodipodi:namedview>
@@ -605,9 +605,9 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(410.4317,-384.66211)">
+     transform="translate(449.30506,-384.66213)">
     <g
-       transform="matrix(1.1305158,0,0,1.1305159,-689.84337,-307.72609)"
+       transform="matrix(1.1305158,0,0,1.1305159,-689.84337,-421.72609)"
        id="g9406-8">
       <g
          id="g5592-5-2-0-7-8"
@@ -1436,7 +1436,7 @@
     </g>
     <g
        id="g28835"
-       transform="matrix(1.1305158,0,0,1.1305159,-521.19604,-581.00113)">
+       transform="matrix(1.1305158,0,0,1.1305159,-521.19604,-381.00113)">
       <g
          transform="matrix(0.42162709,0,0,-0.40821025,461.0664,1473.3095)"
          inkscape:label="figures"
@@ -3855,17 +3855,17 @@
        inkscape:connector-curvature="0"
        id="path4130"
        d="m -92.576313,472.1743 c -18.571437,19.28572 -18.571437,19.28572 -18.571437,19.28572"
-       style="fill:none;stroke:#ff0000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;stroke:#ff0000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:" />
     <path
        inkscape:connector-curvature="0"
        id="path4130-2"
        d="m -135.00488,418.96 c -18.57143,19.28573 -18.57143,19.28573 -18.57143,19.28573"
-       style="fill:none;stroke:#ff0000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;stroke:#ff0000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:" />
     <path
        inkscape:connector-curvature="0"
        id="path4130-0"
        d="m -9.1172631,440.35269 c 18.57143,19.28572 18.57143,19.28572 18.57143,19.28572"
-       style="fill:none;stroke:#ff0000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;stroke:#ff0000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:" />
     <flowRoot
        transform="translate(-95.306279,309.24358)"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12px;line-height:125%;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -3881,27 +3881,27 @@
            width="116.72251"
            id="rect9402" /></flowRegion><flowPara
          id="flowPara9404"
-         style="fill:#000000;stroke:none;font-style:italic;font-weight:normal">split homologous gene family into orthologous gene subfamilies</flowPara></flowRoot>    <path
-       style="fill:none;stroke:#000000;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+         style="font-style:italic;font-weight:normal;fill:#000000;stroke:none">split homologous gene family into orthologous gene subfamilies</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:"
        d="m -132.62404,541.73372 -149.5026,74.45981"
        id="path6909"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-6)"
+       style="fill:none;stroke:#000000;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:"
        d="m -100.92351,541.17352 -33.33504,74.45983"
        id="path6909-6"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-2)"
+       style="fill:none;stroke:#000000;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:"
        d="M -83.75091,540.16336 34.43694,615.63335"
        id="path6909-1"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-8)"
-       d="M -58.497095,538.14306 208.1832,612.60289"
+       style="fill:none;stroke:#000000;stroke-width:1.02843618px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -58.490307,538.1625 209.18656,616.62406"
        id="path6909-9"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
@@ -3909,7 +3909,7 @@
        xml:space="preserve"
        id="flowRoot5254-6-2-1-0"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12px;line-height:125%;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       transform="translate(5.5768193,714.94053)"><flowRegion
+       transform="translate(5.5768193,600.94053)"><flowRegion
          id="flowRegion5256-1-4-4-7"
          style="stroke-width:1"><rect
            id="rect5258-6-5-4-1"
@@ -3919,6 +3919,50 @@
            y="161.6479"
            ry="0"
            style="stroke-width:1" /></flowRegion><flowPara
-         style="font-style:italic;fill:#000000;stroke:none;font-weight:normal"
-         id="flowPara5890-0-7-8">ancestral content reconstruction with Count Wagner parsimony</flowPara></flowRoot>  </g>
+         style="font-style:italic;font-weight:normal;fill:#000000;stroke:none"
+         id="flowPara5890-0-7-8">ancestral content reconstruction with Count Wagner parsimony</flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-815.49738"
+       y="-422.09149"
+       id="text5149"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1.0000001,0.99999992,0,0,0)"><tspan
+         sodipodi:role="line"
+         x="-815.49738"
+         y="-422.09149"
+         id="tspan5153"
+         style="font-size:12.50000095px">orthologous gene subtrees</tspan></text>
+    <text
+       transform="matrix(0,-1.0000001,0.99999991,0,0,0)"
+       sodipodi:linespacing="125%"
+       id="text5157"
+       y="-422.09149"
+       x="-900.52441"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-size:12.50000095px;text-align:center;text-anchor:middle"
+         id="tspan5159"
+         y="-422.09149"
+         x="-900.52441"
+         sodipodi:role="line">projections in the</tspan><tspan
+         style="font-size:12.50000095px;text-align:center;text-anchor:middle"
+         y="-406.46649"
+         x="-900.52441"
+         sodipodi:role="line"
+         id="tspan5161">species tree</tspan></text>
+    <text
+       transform="matrix(0,-1.0000001,0.99999991,0,0,0)"
+       sodipodi:linespacing="125%"
+       id="text5173"
+       y="-422.09149"
+       x="-495.49738"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-size:12.50000095px"
+         id="tspan5175"
+         y="-422.09149"
+         x="-495.49738"
+         sodipodi:role="line">full gene tree</tspan></text>
+  </g>
 </svg>
