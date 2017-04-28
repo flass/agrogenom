@@ -71,7 +71,7 @@ Block events are ultimately recomputed, to capture co-events in this final set o
 
 The pangenome-wide history of genomes is now reconstructed! Now it's time to study and to interpret the patterns of genome evolution...
 
-[!figspetreegenome]
+![figspetreegenome]
 
 -----------
 
