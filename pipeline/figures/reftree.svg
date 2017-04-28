@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  >
+<text x="50" y="995"  >N15 [+734-512=4586]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 236 588 L 0 588 0 1045" />
+<text x="286" y="538"  >N21 [+147-110=4623]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 1067 212 L 236 212 236 588" />
+<text x="1117" y="162"  >N27 [+218-227=4614]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2080 125 L 1067 125 1067 212" />
+<text x="2130" y="75"  >N32 [+396-110=4900]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2239 50 L 2080 50 2080 125" />
+<text x="2289" y="0"  >N36 [+70-104=4866]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2518 0 L 2239 0 2239 50" />
+<text x="2568" y="-50"  >AGRT5 [+977-204=5639]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2525 100 L 2239 100 2239 50" />
+<text x="2575" y="50"  >AGRSP1 [+951-282=5535]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2358 200 L 2080 200 2080 125" />
+<text x="2408" y="150"  >ATU8A [+814-122=5592]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2169 300 L 1067 300 1067 212" />
+<text x="2219" y="250"  >ATU6A [+1755-230=6139]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 523 965 L 236 965 236 588" />
+<text x="573" y="915"  >N28 [+50-128=4545]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 784 731 L 523 731 523 965" />
+<text x="834" y="681"  >N33 [+135-136=4544]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 1180 512 L 784 512 784 731" />
+<text x="1230" y="462"  >N37 [+57-130=4471]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2594 400 L 1180 400 1180 512" />
+<text x="2644" y="350"  >ATU9A [+547-516=4502]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 1616 625 L 1180 625 1180 512" />
+<text x="1666" y="575"  >N42 [+429-63=4837]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 1763 550 L 1616 550 1616 625" />
+<text x="1813" y="500"  >N46 [+161-71=4927]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2386 500 L 1763 500 1763 550" />
+<text x="2436" y="450"  >ATU7B [+686-431=5182]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2265 600 L 1763 600 1763 550" />
+<text x="2315" y="550"  >ATU7A [+1325-211=6041]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2208 700 L 1616 700 1616 625" />
+<text x="2258" y="650"  >ATU7C [+1029-181=5685]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2018 950 L 784 950 784 731" />
+<text x="2068" y="900"  >N38 [+205-127=4622]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2129 850 L 2018 850 2018 950" />
+<text x="2179" y="800"  >N43 [+195-67=4750]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2321 800 L 2129 800 2129 850" />
+<text x="2371" y="750"  >ATU4A [+1209-84=5875]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2358 900 L 2129 900 2129 850" />
+<text x="2408" y="850"  >ATU4B [+763-183=5330]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2156 1050 L 2018 1050 2018 950" />
+<text x="2206" y="1000"  >N44 [+126-96=4652]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2288 1000 L 2156 1000 2156 1050" />
+<text x="2338" y="950"  >ATU4C [+1282-64=5870]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2294 1100 L 2156 1100 2156 1050" />
+<text x="2344" y="1050"  >AGRTU2 [+481-154=4979]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 3017 1200 L 523 1200 523 965" />
+<text x="3067" y="1150"  >ATU2A [+1877-409=6013]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 349 1503 L 0 1503 0 1045" />
+<text x="399" y="1453"  >N22 [+124-220=4490]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2278 1300 L 349 1300 349 1503" />
+<text x="2328" y="1250"  >ATU3A [+1168-280=5378]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 724 1706 L 349 1706 349 1503" />
+<text x="774" y="1656"  >N29 [+97-116=4471]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 1235 1525 L 724 1525 724 1706" />
+<text x="1285" y="1475"  >N34 [+130-223=4378]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2207 1450 L 1235 1450 1235 1525" />
+<text x="2257" y="1400"  >N39 [+213-188=4403]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2575 1400 L 2207 1400 2207 1450" />
+<text x="2625" y="1350"  >ATU5A [+1018-89=5332]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2592 1500 L 2207 1500 2207 1450" />
+<text x="2642" y="1450"  >AGRTU3 [+1058-140=5321]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2507 1600 L 1235 1600 1235 1525" />
+<text x="2557" y="1550"  >ATU13 [+754-139=4993]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2917 1887 L 724 1887 724 1706" />
+<text x="2967" y="1837"  >N35 [+584-201=4854]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2960 1750 L 2917 1750 2917 1887" />
+<text x="3010" y="1700"  >N40 [+120-48=4926]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 3115 1700 L 2960 1700 2960 1750" />
+<text x="3165" y="1650"  >AGRTU1 [+800-208=5518]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 3105 1800 L 2960 1800 2960 1750" />
+<text x="3155" y="1750"  >ATU1C [+1103-173=5856]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2946 2025 L 2917 2025 2917 1887" />
+<text x="2996" y="1975"  >N41 [+99-64=4889]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 2991 1950 L 2946 1950 2946 2025" />
+<text x="3041" y="1900"  >N45 [+108-49=4948]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 3142 1900 L 2991 1900 2991 1950" />
+<text x="3192" y="1850"  >AGRSH [+645-248=5345]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 3142 2000 L 2991 2000 2991 1950" />
+<text x="3192" y="1950"  >ATU1A [+730-132=5546]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 3105 2100 L 2946 2100 2946 2025" />
+<text x="3155" y="2050"  >ATU1B [+831-93=5627]</text>
+<path style="stroke:black; fill:none; stroke-width:4; " d="M 1446 2300 L 1695 2300" />
+<text x="1571" y="2350"  >0.01</text>
+</svg>
