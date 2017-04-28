@@ -404,6 +404,6 @@ The bioinformatics methods depending quite strongly on what sort of functional a
 [fig4]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-4.png
 [fig5]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-5.png
 [fig6]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-6.png
-[figspetreegenome]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/phylogram_contents+events+com.png
+[figspetreegenome]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/species_tree_map_events_gene_contents.png
 [figall]: https://github.com/flass/agrogenom/blob/master/pipeline/reconciliation_pipeline_loop.pdf
 
