@@ -59,7 +59,7 @@ Then, block events - unique DTL events that are thought to have involved blocks 
 The size of these block events is then used as a criterion to evaluate which of the multiple solutions from different replicates are optimal, assuming that the larger the blocks of similar events, the more likely the component events are to be rightly estimated, i.e. the inferred single events are "confirmed" by their many similar neighbours. This optimal choice of strongly supported transfer events will then be used as a backbone for reconciliations, to which more events will be added in order to obtain scenarios that are more parsimonious in duplication and losses.
 
 Due to the previous reliance on strong statistical support for topological conflict to characterize HGT, many potential transfer events may have come unrecognize yet, due to their not inducing gene/species tree topological conflict, or it not occuring on well-supported branches of the gene tree. Failiure to recognize those events may induce the inferrence of many spurious ancient duplication and loss events.  
-We thus use the [TPMS] algorithm for detection of taxonomic incongruencies (described in [Bigot et al. 2013], re-implemented in [rec_to_db.py] module) to identify subtrees with abnormal combination of species; transfer events are then inferred within these subtree when they avoid a too high number of duplication and loss events to be induced otherwise this conflictis first used for the inferrence of HGT events. Finally, duplication and losses are inferred where necessary to obtain consistent reconciliations, i.e. have no unexplained topological incongruency left between gene and species trees. 
+We thus use the algorithm for detection of taxonomic incongruencies described in [Bigot et al. 2013] (re-implemented in [rec_to_db.py] module) to identify subtrees with abnormal combination of species; transfer events are then inferred within these subtree when they avoid a too high number of duplication and loss events to be induced otherwise this conflictis first used for the inferrence of HGT events. Finally, duplication and losses are inferred where necessary to obtain consistent reconciliations, i.e. have no unexplained topological incongruency left between gene and species trees. 
 
 ![fig5] 
 
@@ -250,7 +250,7 @@ for a same non-redundant gene tree node, it is possible to discriminate the best
 The events that are found in the largest blocks of genes are retained as optimal. When this criterion is not discriminant (most events involve single genes), the (equivalent) transfer event(s) with the highest frequency amongst the independent replicates is chosen as optimal.
 
 This choice of optimal events may create the cohabitation in the same gene tree of events inferred in different replicates, which does not guaratee the consistency of the global scenario.  
-This potential conflict is resolved during an a posteriori top-down parcours of the gene tree to coherently integrate events and complete the reconciliation.
+This potential conflict is resolved by an a posteriori top-down parcours of the gene tree where events are selected from the event pool so to ensure that the species tree assignation of the gene tree node is coherent with its parent's assignation.
 
 Additional HGT are then inferred, based on the recognition of taxonomic incongruence (using the scoring algorithm from [Bigot et al. 2013] reimplemented in [tree2 module][tree2]). This algorithm computes the most recent common ancestor of species represented in a gene clade and assigns this ancestral taxon to the node; a large increase in taxonomic depth (i.e. closeness to species tree root) from a node to its father node is seen as an incongruence, than can be interpreted as evidence for HGT event(s) occurred in the subtree. "Alien" parts of the subtree generating the excess taxonomic depth are identified and transfer events are inferred at their stem.
 
@@ -367,8 +367,8 @@ Here is a graphical summary of that (long!) pipeline for ancestral genome recons
 
 ## III. Functional analysis of genome histories  
 
-Here is the succint description of the program for the statistical testing of clustering of genes by biochemical function in groups of co-transferred genes, as performed in the manuscript [Lassalle et al. 2016] (please refer to that paper more accurate description of the rationale). 
-The bioinformatics methods depending quite strongly on what sort of functional annotation data one would rely on, I do not propose here a simplified, generelazied syntax for using the program [score_genegroup_funsim]; for the specifics of the [Lassalle et al. 2016] study,  please see command details in the corresponding section of the script [pipeline_agrogenom.csh].
+An exemple of application of this pipeline is presented in the [Lassalle et al. 2016] study, where we introduce the statistical testing of the preferential co-transfer and conservation of genes with more related biochemical functions.
+The bioinformatics methods involved there depend quite strongly on the specific datset, notably the sources of functional annotation that were used, so no generic pipeline is detailed here; for the specific use of the program [score_genegroup_funsim] for the [Lassalle et al. 2016] study,  please see command details in the corresponding section of the script [pipeline_agrogenom.csh].
 
 
 
