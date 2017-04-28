@@ -63,11 +63,15 @@ We thus use the [TPMS] algorithm for detection of taxonomic incongruencies (desc
 
 ![fig5] 
 
-Once optimal transfer and duplication events are fixed, a last step of completion of reconciliations is then performed within orthologous lineages (deriving from any duplication or "additive" transfer event), to detect transfer from the distribution of species in the lineage, where heterogeneous ditribution of the gene in the species tree would otherwise have to be explained by complicated patterns of ancient duplication and covergent losses. 
+Once optimal transfer and duplication events are fixed, a last step of completion of reconciliations is then performed within orthologous lineages (deriving from any duplication or "additive" transfer event), to detect transfer from the distribution of species in the lineage, where heterogeneous occurrence pattern of the gene in the species tree would otherwise have to be explained by complicated patterns of ancient duplication and covergent losses. 
 
 ![fig6] 
 
 Block events are ultimately recomputed, to capture co-events in this final set of DTL events.  
+
+The pangenome-wide history of genomes is now reconstructed! Now it's time to study and to interpret the patterns of genome evolution...
+
+[!figspetreegenome]
 
 -----------
 
@@ -400,5 +404,6 @@ The bioinformatics methods depending quite strongly on what sort of functional a
 [fig4]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-4.png
 [fig5]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-5.png
 [fig6]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-6.png
+[figspetreegenome]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/phylogram_contents+events+com.png
 [figall]: https://github.com/flass/agrogenom/blob/master/pipeline/reconciliation_pipeline_loop.pdf
 
