@@ -161,7 +161,7 @@ Prunier outputs a list of gene tree pruning steps (analogous to the SPR moves in
 ```bash
 # generate unicopy sub-family alignments from previous family alignments
 mkdir ./duplications/subalns_fasta
-python scriptss_agrogenom/extract_subaln.py ./duplications/subtree2leaves ./nuc_alns_fasta fasta ./duplications/subalns_fasta
+python scripts_agrogenom/extract_subaln.py ./duplications/subtree2leaves ./nuc_alns_fasta fasta ./duplications/subalns_fasta
 
 # perform horizontal transfer detection by Prunier on unicopy subtrees (06/07/12)
 mkdir -p prunier_out/
@@ -206,13 +206,14 @@ It is important to note that at this point the plurality of solutions that may h
 # copy dumps created by multiple jobs
 python scripts_agrogenom/import_sql_dumps.py -c -i -d --job.dumps.dir=./integrate_rec
 ```
-Find example results for Agrogenom study on [Figshare](https://doi.org/10.6084/m9.figshare.4910210).
+Find example results for Agrogenom study and detail of output files on [Figshare](https://doi.org/10.6084/m9.figshare.4910210).
 
 ### 5. Build genomic blocks of evolutionary events
 
+The script [getblockevents.py] finds block events and create the corresponding objects in the database.
 
-This script [getblockevents.py] finds block events and create the corresponding objects in the database.
-It first explore the contemporary genomes (replicon by replicon), recognizing events on their lineage that are similar between neighbouring genes and aggregate them into "leaf block events";
+It first explores the contemporary genomes (replicon by replicon), recognizing events on their lineage that are similar between neighbouring genes and aggregate them into "leaf block events". This search is performed with a greedy algorithm covering the replicon; "gap" genes without signal for a congruent event are first allowed, and then tested for compatibility and eventually rejected if negative (see a schematic representation of the [leaf block building algorithm][figleafblockalgo]). 
+
 
 ```bash
 # similarly to above, parallel jobs can be working on independent tasks, distributed from a task table in the SQL db
@@ -229,7 +230,7 @@ scripts_agrogenom/getblockevents.py ./integrate_rec/reconciled_tree_pickles reft
 done
 ```
 
-In a second step, leaf block events from different genomes referring to the same evolutionary (duplication, transfer) events are aggregated into an "ancestral block event".
+In a second step, leaf block events from different genomes referring to the same evolutionary (duplication, transfer) events are aggregated into an "ancestral block event". Because the compatibility of member events is not transitive across connected leaf blocks, some leaf blocks must be split and recomposed to reach a consistent assignation of leaf blocks to ancestral blocks (see a schematic representation of the [ancestral block building algorithm][figancblockalgo]). 
 
 ```bash
 # this is done in one sequential job
@@ -240,16 +241,17 @@ scripts_agrogenom/getblockevents.py ./integrate_rec/reconciled_tree_pickles reft
 Ancestral blocks are thus the units of actual evotutionary events that gather homologous single gene events set in the past (i.e. located at internal gene tree nodes) - or rather, gathering independent observations in different gene families of the same evolutionary event.  
 Leaf blocks are the descendent of the ancestral blocks, i.e. their realization in contemporary genomes.
 
-Find example results for Agrogenom study on [Figshare](https://doi.org/10.6084/m9.figshare.4910576).
+Find example results for Agrogenom study and detail of output files on [Figshare](https://doi.org/10.6084/m9.figshare.4910576).
 
-### 6. Reconciliation refinement
+### 6. Refinement and completion of reconciliations
 
 When multiple transfer events have been proposed by independent Prunier inferences on overlapping unicopy subtrees ( = replicates)
 for a same non-redundant gene tree node, it is possible to discriminate the best reconciliation among all inferences using the regional signal, i.e. block event information.  
 The events that are found in the largest blocks of genes are retained as optimal. When this criterion is not discriminant (most events involve single genes), the (equivalent) transfer event(s) with the highest frequency amongst the independent replicates is chosen as optimal.
 
 This choice of optimal events may create the cohabitation in the same gene tree of events inferred in different replicates, which does not guaratee the consistency of the global scenario.  
-This potential conflict is resolved during an a posteriori top-down parcours of the gene tree to integrate and completion of the reconciliation.  
+This potential conflict is resolved during an a posteriori top-down parcours of the gene tree to coherently integrate events and complete the reconciliation.
+
 Additional HGT are then inferred, based on the recognition of taxonomic incongruence (using the scoring algorithm from [Bigot et al. 2013] reimplemented in [tree2 module][tree2]). This algorithm computes the most recent common ancestor of species represented in a gene clade and assigns this ancestral taxon to the node; a large increase in taxonomic depth (i.e. closeness to species tree root) from a node to its father node is seen as an incongruence, than can be interpreted as evidence for HGT event(s) occurred in the subtree. "Alien" parts of the subtree generating the excess taxonomic depth are identified and transfer events are inferred at their stem.
 
 ```bash
@@ -265,7 +267,7 @@ INSERT INTO phylogeny.reconciliation_collection VALUES ('reco_col_1', '/full/pat
 EOF
 ```
 
-Find example results for Agrogenom study on [Figshare](https://doi.org/10.6084/m9.figshare.4910699).
+Find example results for Agrogenom study and detail of output files on [Figshare](https://doi.org/10.6084/m9.figshare.4910699).
 
 At this point, it is assumed that we identified all events that lead to the creation of a group of  orthologous genes, i.e. any duplication or additive HGT that created respectively paralogous or xenologous lineages.
 
@@ -301,7 +303,7 @@ psql -h yourservername -U yourusername -d yourdbname << EOF
 \copy phylogeny.represented_event FROM './ancestral_content/Count.AsymmetricWagner.gain_15/reconciliation_collection/represented_event_dump.tab'
 EOF
 ```
-Find example results for Agrogenom study on [Figshare](https://doi.org/10.6084/m9.figshare.4910702).
+Find example results for Agrogenom study and detail of output files on [Figshare](https://doi.org/10.6084/m9.figshare.4910702).
 
 ### 8. Finalizing reconciliation and synthesis
 
@@ -345,7 +347,7 @@ Output also includes tables for presence/absenceprofiles of all gene families (a
 python scripts_agrogenom/ancestral_content.py -d phylariane -p $dbpwd --input-family-history-pickles=$anccont/family_history_pickles --input-subfamily-trees=$anccont/ortho_subtrees --output-all --output-subfamily-trees=false --output-pickled-family-histories=false ./nucfam_fasta_list ./refined_trees/reconciled_tree_pickles reftree ./synthesis
 ```
 
-Find example results for Agrogenom study on [Figshare](https://doi.org/10.6084/m9.figshare.4924439).  
+Find example results for Agrogenom study and detail of output files on [Figshare](https://doi.org/10.6084/m9.figshare.4924439).  
 
 You can also export the genome-wide synthesis of genome gene contents as a nice SVG output graphics!
 
@@ -405,5 +407,7 @@ The bioinformatics methods depending quite strongly on what sort of functional a
 [fig5]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-5.png
 [fig6]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-6.png
 [figspetreegenome]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/species_tree_map_events_gene_contents.png
-[figall]: https://github.com/flass/agrogenom/blob/master/pipeline/reconciliation_pipeline_loop.pdf
+[figall]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline_loop.pdf
+[figleafblockalgo]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/leaf_block_algorithm.pdf
+[figancblockalgo]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/anc_block_algorithm.pdf
 
