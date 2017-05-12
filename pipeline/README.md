@@ -8,7 +8,7 @@ Typically, the way input data - from genome sequence and annotation up to homolo
 
 Also, the way parallel calculation is implemented is very specific to anyone's computational environment - e.g. if using a computer cluster, what kind of job scheduler system is used? - and should be adapted accordingly. This should be fairly straightforward, given the parallelization relies on the fondamentally parallel structure of the data, typically the many gene families are considered independent for several long computational steps like sequence alignement, gene tree inference and gene tree/species tree reconciliation - in fact only the last step of block event reconstruction consider the gene families jointly.  
 
-Thus, one should consider the following code as a template manual to perform inferences and analyses as described in [Lassalle et al. 2016]; to exactly replicate the work from this study please refer to the more detailed script [pipeline_agrogenom.csh], which is also  annotated with details on intermediate results of that particular study.  
+Thus, one should consider the following code (gatherred in [pipeline_simple.sh]) as a template manual to perform inferences and analyses as described in [Lassalle et al. 2016]. To exactly replicate the work from this study please refer to the more detailed script [pipeline_agrogenom.csh], which is also  annotated with details on intermediate results of that particular study.  
 
 The pipeline is divided in three parts:
   
@@ -401,6 +401,7 @@ The bioinformatics methods involved there depend quite strongly on the specific 
 [COUNT]: http://www.iro.umontreal.ca/~csuros/gene_content/count.html
 
 [pipeline_agrogenom.csh]: https://github.com/flass/agrogenom/blob/master/pipeline/pipeline_agrogenom.csh
+[pipeline_simple.sh]: https://github.com/flass/agrogenom/blob/master/pipeline/pipeline_simple.sh
 [rec_to_db.py]: https://github.com/flass/agrogenom/blob/master/scripts/rec_to_db.py
 [find_ancestral_duplications.py]: https://github.com/flass/agrogenom/blob/master/scripts/find_ancestral_duplications.py
 [getblockevents.py]: https://github.com/flass/agrogenom/blob/master/scripts/getblockevents.py
