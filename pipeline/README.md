@@ -79,7 +79,7 @@ Below is the simplified version of code supporting this procedure:
 
 ### 0. Set-up relational database
 
-This pipeline requires setting up a PostgreSQL database. For efficiency reasons (use of many dynamic queries at certain stages), it is advised to use it locally, i.e. with localhost as host server, but usinga host on a local network will do as well.
+This pipeline requires setting up a PostgreSQL database. For efficiency reasons (use of many dynamic queries at certain stages), it is advised to use it locally, i.e. with `localhost` as host server, but using a host on a local network will do as well.
 
 ```bash
 sudo apt-get install postgresql postgresql-client postgresql-contrib postgresql-doc python-psycopg2 
