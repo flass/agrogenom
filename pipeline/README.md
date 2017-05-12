@@ -77,6 +77,18 @@ The pangenome-wide history of genomes is now reconstructed! Now it's time to stu
 
 Below is the simplified version of code supporting this procedure:
 
+### 0. Set-up relational database
+
+This pipeline requires setting up a PostgreSQL database. For efficiency reasons (use of many dynamic queries at certain stages), it is advised to use it locally, i.e. with localhost as host server, but usinga host on a local network will do as well.
+
+```bash
+sudo apt-get install postgresql postgresql-client postgresql-contrib postgresql-doc python-psycopg2 
+# then create a database (see https://www.postgresql.org/docs/9.6/static/tutorial-createdb.html for troubleshooting)
+sudo createdb yourdbname
+# and load in it the agrogenom schema
+psql -h yourservername -U yourusername -d yourdbname < scripts_agrogenom/agrogenomdb_schema.sql
+```
+
 ### 1. Root gene trees
 
 The reconciliation of gene and species tree requires both trees to be rooted and highly depends on where the root are placed. Usual approaches for rooting based on balancing the tree topology (e.g. using midpoint rooting) can be inappropriate in case of certain lineages evolving at different.  
@@ -180,8 +192,6 @@ Prunier outputs a forest of pruned subtree, which needs to be interpreted in ter
 This translation of Prunier output is done for every unicopy subtree; those many independent reconciliations are then integrated using [rec_to_db.py] script, by creating unique records of events and merging those that are redundant, thus preparing the integration of reconciliations into a global scenario for the whole gene family. 
 
 ```bash
-# this step requires setting up a SQL database following the agrgenom schema
-psql -h yourservername -U yourusername -d yourdbname < scripts_agrogenom/agrogenomdb_schema.sql
 # it is possible for parallel jobs to run the script: a stack of tasks will be distributed to parallel workers via dynamic query of the database.
 # generate task list and corresponding db table
 scripts_agrogenom/lsfullpath.py ./duplications/modified_trees > ./duplications/modified_tree_list

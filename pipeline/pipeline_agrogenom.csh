@@ -76,14 +76,10 @@ grep ">" $agrodata/blastdb/$dbname.prot.fasta | grep -v "\." | cut -d">" -f2 | c
 # build blast db
 cd $agrodata/blastdb
 formatdb -i $dbname.prot.fasta
-# [TO DO YOURSELF] here one need to implement his own routine for completing in parallel the (massive: 281223^2 ~ 8e+11) set of blast jobs.
+# [TO ADAPT TOWARDS COMPUTATION IN PARALLEL] - here one need to implement his own routine for completing in parallel the (massive: 281223^2 ~ 8e+11) set of blast jobs.
 # parameters are filtering on e-value <= 1e-5; tabular output, no header (old -m 8)
-# agregate all the results into one file: $agrodata/families/$dbname.blastout
-cd $agrodata
-mkdir $families
-foreach bo (`ls BLAST/blastout/res.1/`)
-cat BLAST/blastout/res.1/$bo >> families/$dbname.blastout
-end
+# here using NCBI blast+ package ; an alternative is to use MMseqs2 (cf. http://biorxiv.org/content/early/2017/04/25/079681)
+blastp -db $dbname.prot.fasta -q $dbname.prot.fasta -evalue 1e-5 -out $agrodata/families/$dbname.blastout -outfmt 6
 
 ## build protein sequence families with Silix/Hifix (04/05/2012) ; references:
 # Miele V, Penel S, Duret L. 2011. Ultra-fast sequence clustering from similarity networks with SiLiX. BMC Bioinformatics. 12:116. doi: 10.1186/1471-2105-12-116.
