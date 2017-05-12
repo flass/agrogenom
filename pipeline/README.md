@@ -371,7 +371,7 @@ Find example of rendering for Agrogenom study on [Figshare](https://doi.org/10.6
 
 That's all, done!
 
-Here is a graphical summary of that (long!) pipeline for ancestral genome reconstruction:
+Here is a graphical summary of that (long!) pipeline for ancestral genome reconstruction (see here for higher resolution [figallpdf]):
 
 ![figall]
 
@@ -418,7 +418,8 @@ The bioinformatics methods involved there depend quite strongly on the specific 
 [fig5]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-5.png
 [fig6]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline-6.png
 [figspetreegenome]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/species_tree_map_events_gene_contents.png
-[figall]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline_loop.pdf
+[figall]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline_loop.png
+[figallpdf]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/reconciliation_pipeline_loop.pdf
 [figleafblockalgo]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/leaf_block_algorithm.pdf
 [figancblockalgo]: https://github.com/flass/agrogenom/blob/master/pipeline/figures/anc_block_algorithm.pdf
 
