@@ -371,7 +371,7 @@ Find example of rendering for Agrogenom study on [Figshare](https://doi.org/10.6
 
 That's all, done!
 
-Here is a graphical summary of that (long!) pipeline for ancestral genome reconstruction (see here for higher resolution [figallpdf]):
+Here is a graphical summary of that (long!) pipeline for ancestral genome reconstruction (see [here][figallpdf] for higher resolution):
 
 ![figall]
 
