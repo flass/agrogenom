@@ -115,7 +115,7 @@ mv ./tpms_db/Collection ./tpms_db/genetrees.rooted
 mkdir ./rooted_trees/
 python scripts_agrogenom/split_tpms_db.py ./tpms_db/genetrees.rooted ./rooted_trees
 ```
-Because TPMS roots poorly trees in absence of duplication and presence of many transfers, one can use alternative method: find tranfers in unicopy gene trees using [Prunier] to then re-root them consistently to the parsimonious transfer scenario.
+Because TPMS roots poorly trees in absence of duplication and presence of many transfers, one can use alternative method: find tranfers in unicopy gene trees using [Prunier], testing every root, to then re-root them consistently to the parsimonious transfer scenario.
 
 ```bash
 # identify unicopy gene families from nucleic alignments 
