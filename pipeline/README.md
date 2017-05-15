@@ -91,7 +91,7 @@ psql -h yourservername -U yourusername -d yourdbname < scripts_agrogenom/agrogen
 
 ### 1. Root gene trees
 
-The reconciliation of gene and species tree requires both trees to be rooted and highly depends on where the root are placed. Usual approaches for rooting based on balancing the tree topology (e.g. using midpoint rooting) can be inappropriate in case of certain lineages evolving at different.  
+The reconciliation of gene and species tree requires both trees to be rooted and highly depends on where the root are placed. Usual approaches for rooting based on balancing the tree topology (e.g. using midpoint rooting) can be inappropriate in case of certain lineages evolving at different rate.  
 In our context, we will favour rooting that already consider the gene tree together with the species tree, in order to minimize the impact of the rooting on the subsequently inferred scenario, i.e. to find a root that is parsimonious in terms of implied DTL events. This is achieved by minimizing a score that combines to criteria: the first one aims at maximizing the size of subtrees with unicopy sequences while the second one tries to maximize the accuracy of taxonomic affectations for nodes [Bigot et al. 2013].
 (for this step, it can be handy to refer to [TMPS manual][TPMS])
 
@@ -115,7 +115,7 @@ mv ./tpms_db/Collection ./tpms_db/genetrees.rooted
 mkdir ./rooted_trees/
 python scripts_agrogenom/split_tpms_db.py ./tpms_db/genetrees.rooted ./rooted_trees
 ```
-Because TPMS roots poorly trees in absence of duplication and presence of many transfers, one can use alternatie method: find tranfers in unicopy gene trees using [Prunier] to then re-root them consistently to the parcimonious transfer scenario.
+Because TPMS roots poorly trees in absence of duplication and presence of many transfers, one can use alternative method: find tranfers in unicopy gene trees using [Prunier] to then re-root them consistently to the parsimonious transfer scenario.
 
 ```bash
 # identify unicopy gene families from nucleic alignments 
