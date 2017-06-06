@@ -18,7 +18,8 @@ cd /path/to/yourreconciliationfolder
 sudo apt-get install postgresql postgresql-client postgresql-contrib postgresql-doc python-psycopg2 
 # then create a database (see https://www.postgresql.org/docs/9.6/static/tutorial-createdb.html for troubleshooting)
 sudo createdb yourdbname
-# and load in it the agrogenom schema
+# and load in it the agrogenom schema 
+# generate table yourself based on the model, or use the perl module in pipeline/perl_utils/generate_genome_schema_tables.tar.gz
 psql -h yourservername -U yourusername -d yourdbname < $scripts_agrogenom/agrogenomdb_schema.sql
 
 
