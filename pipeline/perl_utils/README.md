@@ -1,1 +1,1 @@
-This perl module is used to generate dump ofgenome.* tables for population of the agrogenom(-like) database.
+This perl module (by Remi Planel) is used to generate dump of genome.* tables for population of the agrogenom(-like) database.
