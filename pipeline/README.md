@@ -38,7 +38,7 @@ Let's assume we start with a rooted gene tree. (if not, one can use [TPMS] to ro
 
 ![fig0]
 
-First, putative paralogous lineages are identified based on species multiplicity in clades. Within those caldes, SPR moves that do not disturb branches of gene trees with high support were attempted, and retained as gene tree topology updates when they decreased the incidence of duplications. For remaining paralogous lineage, the corresponding subtrees are extracted from the full gene tree. (cf. [subsection II.2](https://github.com/flass/agrogenom/tree/master/pipeline#2-find-putative-duplications-and-extract-unicopy-subtrees))
+First, putative paralogous lineages are identified based on species multiplicity in clades. Within those clades, gene tree topology updates (SPR moves that do not disrupt well-supported branches) were attempted, and retained when they decreased the incidence of duplications. For remaining paralogous lineage, the corresponding subtrees are extracted from the full gene tree. (cf. [subsection II.2](https://github.com/flass/agrogenom/tree/master/pipeline#2-find-putative-duplications-and-extract-unicopy-subtrees))
 
 ![fig1]
 
