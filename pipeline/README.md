@@ -38,7 +38,7 @@ Let's assume we start with a rooted gene tree. (if not, one can use [TPMS] to ro
 
 ![fig0]
 
-First, putative paralogous lineages are identified based on species multiplicity in clades. Within those, subtree pruning and regrafting (SPR) moves that do not disturb branches of gene trees with high SH-like support (>= 0.9) were attempted, and retained as gene tree topology updates when they decreased the number of duplication events (by merging them) or the number of tree leaves involved (by bringing events closer to the tips). For remaining paralogous lineage, the corresponding subtrees are extracted from the full gene tree. (cf. [subsection II.2](https://github.com/flass/agrogenom/tree/master/pipeline#2-find-putative-duplications-and-extract-unicopy-subtrees))
+First, putative paralogous lineages are identified based on species multiplicity in clades. Within those caldes, SPR moves that do not disturb branches of gene trees with high support were attempted, and retained as gene tree topology updates when they decreased the incidence of duplications. For remaining paralogous lineage, the corresponding subtrees are extracted from the full gene tree. (cf. [subsection II.2](https://github.com/flass/agrogenom/tree/master/pipeline#2-find-putative-duplications-and-extract-unicopy-subtrees))
 
 ![fig1]
 
@@ -149,7 +149,7 @@ Find example results for Agrogenom study on [Figshare](https://doi.org/10.6084/m
 Here the script finds potentially duplication nodes in gene trees based on the unicity criterion described in [Bigot et al. 2013] (reimplemented in [tree2 module][tree2] and used in [find_ancestral_duplications.py] script).
 
 When the support for the node is below a threshold (in this exemple 0.9) and the number of losses implied by this duplication (and the leaf set below the node) is higher than a threshold (here 0.2, in number of implied loss per branches in the duplicated lineage), an attempt to modify the local tree topology is made. 
-SPR moves are proposed to bring duplicated leaves to group the closest (without cancelling nodes with strong support), so that duplication events can be inferred more recently in the species tree, and less loss events are to be implied.
+Targeted subtree pruning and regrafting (SPR) moves are proposed (without disrupting nodes with strong support - in this exemple above or equal to 0.9) in order to merge duplication events or to bring the events closer to the tips, so that duplication events can be inferred more recently in the species tree, which imply less subsequent loss events.
 If a modification of the topology has been made, the branch length and supports of the new subtree are then re-evaluated with PhyML.
 
 ```bash
