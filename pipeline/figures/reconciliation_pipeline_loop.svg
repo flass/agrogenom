@@ -23,11 +23,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.44676919"
-     inkscape:cx="956.1974"
-     inkscape:cy="626.96776"
+     inkscape:zoom="3.5741535"
+     inkscape:cx="577.92506"
+     inkscape:cy="900.96794"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g4893"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -2612,7 +2612,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -10440,18 +10440,22 @@
          xml:space="preserve"
          id="flowRoot5254"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12px;line-height:125%;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-         transform="translate(-44.141113,14.584723)"><flowRegion
+         transform="translate(-51.260261,10.025149)"><flowRegion
            id="flowRegion5256"><rect
              id="rect5258"
-             width="125.36624"
-             height="61.092346"
+             width="142.713"
+             height="89.071007"
              x="139.28572"
-             y="161.6479"
+             y="143.46178"
              ry="0" /></flowRegion><flowPara
            id="flowPara5260"
-           style="fill:#000000;stroke:none">annotate potential duplications + extract</flowPara><flowPara
+           style="fill:#000000;stroke:none">annotate</flowPara><flowPara
            style="fill:#000000;stroke:none"
-           id="flowPara8608">unicopy subtrees</flowPara></flowRoot>      <rect
+           id="flowPara8608">potential dupl. </flowPara><flowPara
+           style="fill:#000000;stroke:none"
+           id="flowPara6443">+ reduce dupl. incidence using SPR </flowPara><flowPara
+           style="fill:#000000;stroke:none"
+           id="flowPara6445">+ extract unicopy subtrees</flowPara></flowRoot>      <rect
          transform="matrix(0.8367467,-0.54759014,0.8367467,0.54759014,0,0)"
          y="224.82657"
          x="-140.03288"

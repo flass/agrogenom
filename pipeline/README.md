@@ -38,7 +38,7 @@ Let's assume we start with a rooted gene tree. (if not, one can use [TPMS] to ro
 
 ![fig0]
 
-First, putative paralogous lineages are identified based on species multiplicity in clades, and the corresponding subtrees are extracted from the full gene tree. (cf. [subsection II.2](https://github.com/flass/agrogenom/tree/master/pipeline#2-find-putative-duplications-and-extract-unicopy-subtrees))
+First, putative paralogous lineages are identified based on species multiplicity in clades. Within those, subtree pruning and regrafting (SPR) moves that do not disturb branches of gene trees with high SH-like support (>= 0.9) were attempted, and retained as gene tree topology updates when they decreased the number of duplication events (by merging them) or the number of tree leaves involved (by bringing events closer to the tips). For remaining paralogous lineage, the corresponding subtrees are extracted from the full gene tree. (cf. [subsection II.2](https://github.com/flass/agrogenom/tree/master/pipeline#2-find-putative-duplications-and-extract-unicopy-subtrees))
 
 ![fig1]
 
