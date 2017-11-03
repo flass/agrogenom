@@ -3,7 +3,7 @@ This github repository explains the procedure and makes available the required s
 
 The application of this procedure to a dataset of 47 Rhizobiaceae genomes is presented in the manuscript [Lassalle et al. 2016], and results are interactively browsable on the website of the [Agrogenom database](http://phylariane.univ-lyon1.fr/db/agrogenom/3/).
 
-The [pipeline/] section decribes extensively the procedure for generating the database and performing the ancestral genome reconstruction, whereas the [scripts/] section contains the main programs (in which are implemented original algorithms) that were adapted towards further use and will be maintained.
+The [pipeline/] section decribes extensively the procedure for generating the database and performing the ancestral genome reconstruction, whereas the [scripts/] section contains the main programs (in which are implemented original algorithms, described in [doc/]) that were adapted towards further use and will be maintained.
 
 Authors: Florent Lassalle, Rémi Planel.
 contact: [f.lassalle@imperial.ac.uk](mailto:f.lassalle@imperial.ac.uk)
@@ -11,3 +11,4 @@ contact: [f.lassalle@imperial.ac.uk](mailto:f.lassalle@imperial.ac.uk)
 [Lassalle et al. 2016]: http://biorxiv.org/content/early/2016/10/20/034843
 [pipeline/]: https://github.com/flass/agrogenom/blob/master/pipeline/
 [scripts/]: https://github.com/flass/agrogenom/blob/master/scripts/
+[doc/]: https://github.com/flass/agrogenom/blob/master/doc/
