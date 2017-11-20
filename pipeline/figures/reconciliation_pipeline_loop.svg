@@ -23,11 +23,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.5741535"
-     inkscape:cx="577.92506"
-     inkscape:cy="900.96794"
+     inkscape:zoom="2.5273082"
+     inkscape:cx="1432.0961"
+     inkscape:cy="212.47643"
      inkscape:document-units="px"
-     inkscape:current-layer="g4893"
+     inkscape:current-layer="g11261-5-7-9"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -7017,7 +7017,7 @@
                    id="tspan36729"
                    y="431.70007"
                    x="189.28944"
-                   sodipodi:role="line">with topologically support</tspan><tspan
+                   sodipodi:role="line">with topological support</tspan><tspan
                    id="tspan36721"
                    y="461.66696"
                    x="189.28944"
@@ -14785,22 +14785,22 @@
                id="tspan7443-7-1-2-5-7-33"
                sodipodi:role="line">X</tspan></text>
           <g
-             style="stroke:#ff0000;stroke-width:1.80682838;stroke-miterlimit:4;stroke-dasharray:3.61365681, 3.61365681;stroke-dashoffset:0"
+             style="stroke:#00d400;stroke-width:1.80682838;stroke-miterlimit:4;stroke-dasharray:3.61365681, 3.61365681000000016;stroke-dashoffset:0;stroke-opacity:1"
              transform="matrix(1.25,0,0,-1.25,-157.6397,594.2697)"
              id="g4124-3-2-4-7-1-7-9-8">
             <path
                id="path4126-6-7-1-5-8-5-9-1"
-               style="fill:none;stroke:#ff0000;stroke-width:1.80682838;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:3.61365681, 3.61365681;stroke-dashoffset:0;stroke-opacity:1"
+               style="fill:none;stroke:#00d400;stroke-width:1.80682838;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:3.61365681, 3.61365681000000016;stroke-dashoffset:0;stroke-opacity:1"
                d="m 32.6,208.3 0,-28.2"
                inkscape:connector-curvature="0" />
           </g>
           <g
-             style="stroke:#ff0000;stroke-width:3.71178269;stroke-miterlimit:4;stroke-dasharray:7.42356543, 7.42356543;stroke-dashoffset:0"
+             style="stroke:#00d400;stroke-width:3.71178269;stroke-miterlimit:4;stroke-dasharray:7.42356543, 7.42356543000000002;stroke-dashoffset:0;stroke-opacity:1"
              transform="matrix(-0.35616205,0,0,-1.25,-104.014,594.2697)"
              id="g4132-5-50-1-7-7-1-5-5">
             <path
                id="path4134-6-11-3-0-1-7-1-7"
-               style="fill:none;stroke:#ff0000;stroke-width:3.71178269;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:7.42356543, 7.42356543;stroke-dashoffset:0;stroke-opacity:1"
+               style="fill:none;stroke:#00d400;stroke-width:3.71178269;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:7.42356543, 7.42356543000000002;stroke-dashoffset:0;stroke-opacity:1"
                d="M 32.6,180 95,180"
                inkscape:connector-curvature="0" />
           </g>
@@ -14809,9 +14809,9 @@
              id="text7441-7-2-8-7-4-3"
              y="316.50763"
              x="-125.54447"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:45.17071152px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ff0000;fill-opacity:1;stroke:none"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:45.17071152px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00d400;fill-opacity:1;stroke:none;"
              xml:space="preserve"><tspan
-               style="font-size:27.10242653px"
+               style="font-size:27.10242653px;fill:#00d400;fill-opacity:1;"
                y="316.50763"
                x="-125.54447"
                id="tspan7443-9-1-4-3-2-0"
@@ -14821,9 +14821,9 @@
              id="text7441-2-3-5-7-6-5-3"
              y="343.72369"
              x="-125.51589"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:45.17071152px;line-height:125%;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ff0000;fill-opacity:1;stroke:none"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:45.17071152px;line-height:125%;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00d400;fill-opacity:1;stroke:none;"
              xml:space="preserve"><tspan
-               style="font-weight:bold;font-size:27.10242653px;-inkscape-font-specification:'Arial Bold'"
+               style="font-weight:bold;font-size:27.10242653px;-inkscape-font-specification:'Arial Bold';fill:#00d400;fill-opacity:1;"
                y="343.72369"
                x="-125.51589"
                id="tspan7443-7-1-2-5-5-6-8"
