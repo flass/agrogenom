@@ -1,6 +1,6 @@
 ## Introduction
 
-Here is described the programatic details of the procedure for generating and analysing the Agrogenom phylogenomic database, as described in [Lassalle et al. 2016].  
+Here is described the programatic details of the procedure for generating and analysing the Agrogenom phylogenomic database, as described in [Lassalle et al. 2017].  
 
 This software pipeline is semi-automatized, i.e. there are scripts and routines that have been developped and made (fairly) flexible for generic usage, but it cannot be deployed in one click or command, because of the many idiosyncracies of everyone's project.  
 
@@ -8,7 +8,7 @@ Typically, the way input data - from genome sequence and annotation up to homolo
 
 Also, the way parallel calculation is implemented is very specific to anyone's computational environment - e.g. if using a computer cluster, what kind of job scheduler system is used? - and should be adapted accordingly. This should be fairly straightforward, given the parallelization relies on the fondamentally parallel structure of the data, typically the many gene families are considered independent for several long computational steps like sequence alignement, gene tree inference and gene tree/species tree reconciliation - in fact only the last step of block event reconstruction consider the gene families jointly.  
 
-Thus, one should consider the following code (gatherred in [pipeline_simple.sh]) as a template manual to perform inferences and analyses as described in [Lassalle et al. 2016]. To exactly replicate the work from this study please refer to the more detailed script [pipeline_agrogenom.csh], which is also  annotated with details on intermediate results of that particular study.  
+Thus, one should consider the following code (gatherred in [pipeline_simple.sh]) as a template manual to perform inferences and analyses as described in [Lassalle et al. 2017]. To exactly replicate the work from this study please refer to the more detailed script [pipeline_agrogenom.csh], which is also  annotated with details on intermediate results of that particular study.  
 
 The pipeline is divided in three parts:
   
@@ -23,7 +23,7 @@ The pipeline is divided in three parts:
 ## I. Homologous gene tree database
 
 The procedure is the same than for [HOGENOM databases], which is described in the [Penel et al. 2009] paper and with updated details of the database releases [here](http://doua.prabi.fr/databases/hogenom/home.php?contents=methods).  
-For that reason, the procedure will not be described on this page. For the details of the procedure that was used in [Lassalle et al. 2016], please refer to the [pipeline_agrogenom.csh] script.  
+For that reason, the procedure will not be described on this page. For the details of the procedure that was used in [Lassalle et al. 2017], please refer to the [pipeline_agrogenom.csh] script.  
 The source dataset and intermediary result files can be found at the corresponding [Figshare project] (items).
 
 ## II. Species tree/gene tree reconciliations
@@ -377,19 +377,19 @@ Here is a graphical summary of that (long!) pipeline for ancestral genome recons
 
 ## III. Functional analysis of genome histories  
 
-An exemple of application of this pipeline is presented in the [Lassalle et al. 2016] study, where we introduce the statistical testing of the preferential co-transfer and conservation of genes with more related biochemical functions.
-The bioinformatics methods involved there depend quite strongly on the specific datset, notably the sources of functional annotation that were used, so no generic pipeline is detailed here; for the specific use of the program [score_genegroup_funsim] for the [Lassalle et al. 2016] study,  please see command details in the corresponding section of the script [pipeline_agrogenom.csh].
+An exemple of application of this pipeline is presented in the [Lassalle et al. 2017] study, where we introduce the statistical testing of the preferential co-transfer and conservation of genes with more related biochemical functions.
+The bioinformatics methods involved there depend quite strongly on the specific datset, notably the sources of functional annotation that were used, so no generic pipeline is detailed here; for the specific use of the program [score_genegroup_funsim] for the [Lassalle et al. 2017] study,  please see command details in the corresponding section of the script [pipeline_agrogenom.csh].
 
 
 
 ### References:
- [Lassalle F et al. (2016)][Lassalle et al. 2016] "Ancestral genome reconstruction reveals the history of ecological diversification in Agrobacterium.", bioRxiv, p. 034843. doi: 10.1101/034843.  
- [Penel S et al. (2009)][Penel et al. 2009] "Databases of homologous gene families for comparative genomics" BMC Bioinformatics, 10(S6):S3.  
+ [Lassalle F et al. (2017)][Lassalle et al. 2017] "Ancestral genome reconstruction reveals the history of ecological diversification in Agrobacterium", Genome Biol. Evol. 9(12):3413–3431. doi: 10.1093/gbe/evx255.  
+ [Penel S et al. (2009)][Penel et al. 2009] "Databases of homologous gene families for comparative genomics", BMC Bioinformatics, 10(S6):S3.  
  [Bigot T et al. (2013)][Bigot et al. 2013] "TPMS: a set of utilities for querying collections of gene trees", BMC Bioinformatics 14:109. doi: 10.1186/1471-2105-14-109  
- [Abby SS et al. (2010)][Abby et al. 2010] "Detecting lateral gene transfers by statistical reconciliation of phylogenetic forests". 11:324-324. doi: 10.1186/1471-2105-11-324.  
+ [Abby SS et al. (2010)][Abby et al. 2010] "Detecting lateral gene transfers by statistical reconciliation of phylogenetic forests". BMC Bioinformatics 11:324-324. doi: 10.1186/1471-2105-11-324.  
  [Csűrös M (2008)][Csuros 2008] "Ancestral Reconstruction by Asymmetric Wagner Parsimony over Continuous Characters and Squared Parsimony over Distributions", in Nelson, C. E. and Vialette, S. (eds) Comparative Genomics. Springer Berlin Heidelberg (Lecture Notes in Computer Science, 5267), pp. 72–86.  
 
-[Lassalle et al. 2016]: http://biorxiv.org/content/early/2016/10/20/034843
+[Lassalle et al. 2017]: https://academic.oup.com/gbe/article/9/12/3413/4697203
 [HOGENOM databases]: http://doua.prabi.fr/databases/hogenom/home.php
 [Penel et al. 2009]: https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-10-S6-S3
 [Prunier]: http://pbil.univ-lyon1.fr/software/prunier/
